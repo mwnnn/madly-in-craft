@@ -61,7 +61,7 @@ public class BookViewer extends HttpServlet {
 
         DatabaseInfo dbInfo = new DatabaseInfo();
 
-        out.println(dbInfo.addBook(isbn, title, edisi, publisher, price) + "<br />");
+        //out.println(dbInfo.addBook(isbn, title, edisi, publisher, price) + "<br />");
 
         //ArrayList<Book> books = dbInfo.getAllBook();
 
