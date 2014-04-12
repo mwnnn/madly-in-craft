@@ -8,19 +8,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<!-- Fig. 9.12: WelcomeServlet2.html -->
 
-<html xmlns = "http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Tambah Buku</title>
-        <style type="text/css">
-            body {font-family:Arial;width: 1000px;margin: 0px auto;}
-        </style>
-    </head>
+<jsp:include page="header.jsp"></jsp:include>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@page import="com.madlyincraft.DatabaseInfo" %>
+<%@page import="com.madlyincraft.Book" %>
+<%@page import="java.util.ArrayList" %>
 
-    <body>
-        <h1>Form Pengisian Buku Baru</h1>
-        <form action = "/Amazing/BookViewer" method = "get">
+<%
+   HttpSession sess = request.getSession();
+    Object usernameObj = sess.getAttribute("username");
+
+    if (request.getParameter("logout") != null) {
+        sess.setAttribute("username", null);
+        response.sendRedirect("login.jsp");
+        return;
+    } 
+    if (usernameObj == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }  
+%>
+<a href="index.jsp?logout">Logout</a><br />
+<a href="login.jsp">Login</a><br />
+        <h1>List Tutorial</h1>
+        <form action = "/MadlyInCraft/BookViewer2" method = "get">
 
             <style type="text/css">
                 .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}

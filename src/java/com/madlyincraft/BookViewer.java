@@ -63,7 +63,7 @@ public class BookViewer extends HttpServlet {
 
         out.println(dbInfo.addBook(isbn, title, edisi, publisher, price) + "<br />");
 
-        ArrayList<Book> books = dbInfo.getAllBook();
+        //ArrayList<Book> books = dbInfo.getAllBook();
 
         // generate table
         out.println("<style type=\"text/css\">\n"
@@ -85,23 +85,23 @@ public class BookViewer extends HttpServlet {
                 + "<form>");
 
         // load books from database
-        for (int i = 0; i < books.size(); i++) {
-            int no = i + 1;
-            Book b = books.get(i);
-            out.println("  <tr>\n");
-            out.println("<td class=\"tg-s6z2\">" + no + "</td>\n");
-            out.println("<td class=\"tg-s6z2\">" + b.getISBN() + "</td>\n");
-            out.println("<td class=\"tg-s6z2\">" + b.getTitle() + "</td>\n");
-            out.println("<td class=\"tg-s6z2\">" + b.getEditionNumber() + "</td>\n");
-            out.println("<td class=\"tg-s6z2\">" + b.getPublisher() + "</td>\n");
-            out.println("<td class=\"tg-s6z2\">" + b.getPrice() + "</td>\n");
-            out.println("<td class=\"tg-s6z2\"><input type = \"submit\" value = \"Update\" /></td>\n");
-            out.println("  </tr>\n");
-        }
-        out.println("</form>");
-        out.println("</table>");
-        out.println("<br /><br />");
-        out.println("</body>");
+//        for (int i = 0; i < books.size(); i++) {
+//            int no = i + 1;
+//            Book b = books.get(i);
+//            out.println("  <tr>\n");
+//            out.println("<td class=\"tg-s6z2\">" + no + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\">" + b.getISBN() + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\">" + b.getTitle() + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\">" + b.getEditionNumber() + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\">" + b.getPublisher() + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\">" + b.getPrice() + "</td>\n");
+//            out.println("<td class=\"tg-s6z2\"><input type = \"submit\" value = \"Update\" /></td>\n");
+//            out.println("  </tr>\n");
+//        }
+//        out.println("</form>");
+//        out.println("</table>");
+//        out.println("<br /><br />");
+//        out.println("</body>");
 
         // end XHTML document
         out.println("</html>");
