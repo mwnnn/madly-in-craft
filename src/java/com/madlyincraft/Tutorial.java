@@ -5,48 +5,52 @@
  */
 package com.madlyincraft;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author putih
  */
 public class Tutorial {
 
-    private int Id;
-    private String user_id;
+    private String Id;
+    private Timestamp date_posted;
+    private String difficulty;
     private String title;
     private String content;
     private int total_like;
-    private String date_posted;
-    private String difficulty;
-    private String kategori;
 
-    public Tutorial(int Id, String userId, String title, String content, int total_like, String date_posted, String difficulty, String kategori) {
+    public Tutorial(String Id, Timestamp date_posted, String difficulty, String title, String content, int total_like) {
         this.Id = Id;
-        this.user_id = userId;
+        this.date_posted = date_posted;
+        this.difficulty = difficulty;
         this.title = title;
         this.content = content;
         this.total_like = total_like;
-        this.date_posted = date_posted;
-        this.difficulty = difficulty;
-        this.kategori = kategori;
     }
 
-    
-
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int Id) {
+    public void setId(String Id) {
         this.Id = Id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public Timestamp getDate_posted() {
+        return date_posted;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setDate_posted(Timestamp date_posted) {
+        this.date_posted = date_posted;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public String getTitle() {
@@ -72,31 +76,5 @@ public class Tutorial {
     public void setTotal_like(int total_like) {
         this.total_like = total_like;
     }
-
-    public String getDate_posted() {
-        return date_posted;
-    }
-
-    public void setDate_posted(String date_posted) {
-        this.date_posted = date_posted;
-    }
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public String getKategori() {
-        return kategori;
-    }
-
-    public void setKategori(String kategori) {
-        this.kategori = kategori;
-    }
-    
-    
 
 }

@@ -5,6 +5,9 @@
  */
 package com.madlyincraft;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 /**
  *
  * @author putih
@@ -13,12 +16,14 @@ public class Comment {
 
     private String id;
     private String content;
-    private String timestamp;
+    private Timestamp timestamp;
+    private String uname;
 
-    public Comment(String id, String content, String timestamp) {
+    public Comment(String id, String content, Timestamp timestamp, String username) {
         this.id = id;
         this.content = content;
         this.timestamp = timestamp;
+        this.uname = username;
     }
 
     public String getId() {
@@ -37,12 +42,22 @@ public class Comment {
         this.content = content;
     }
 
-    public String getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+    
+    
 
 }
