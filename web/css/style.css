@@ -1,0 +1,104 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 10, 2014, 9:52:27 PM
+    Author     : acer
+*/
+
+@import url('bootstrap.css');
+
+.navigation {
+    margin-top: 90px;
+    margin-bottom: 80px;
+}
+.buttons {
+    width: 280px;
+}
+.mascot {
+}
+.mascotw {
+    width: 20%;
+    position:absolute;
+    left: 40%;
+    z-index:1;
+}
+.creation {
+    margin-bottom: 20px;
+}
+.description {
+    margin-bottom: 20px;
+}
+.mbottom {
+    margin-bottom: 20px;
+}
+.heading{
+    padding-left: 13px;
+}
+.share {
+    margin-right: 10px;
+}
+footer {
+    text-align: center;
+    background: #DFDEDE;
+    margin-top: 60px;
+    height: 90px;
+    padding-top: 20px;
+}
+.footer {
+    margin: auto;
+    text-align: center;
+}
+.bttm {
+    padding-top: 20px;
+}
+.heart {
+    padding-left : 20px;
+    padding-right: 20px;
+}
+.col-md-12 {
+    text-align: center;
+}
+.registerform {
+    margin-left: 50px;
+}
+.login {
+    padding-left: 15px;
+}
+.comment {
+    width: 650px;
+}
+.floatr {
+    float: right;
+}
+.commentpad {
+    padding-top: 15px;
+}
+.commentname {
+    padding-left: 20px;
+}
+.borderline {
+    border-bottom: 2px;
+    border-bottom-style: dashed;
+    border-bottom-color: #999999;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.comment {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+.comment2 {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.usrcomment {
+    background: #999999;
+}
+.cmntbox {
+    background: #999999;
+}

@@ -133,7 +133,7 @@ public class DatabaseInfo {
             openConnection();
             res = stmt.executeUpdate(query);
             //authenticated = res;
-            
+
         } catch (SQLException e) {
 
         } finally {
@@ -142,7 +142,7 @@ public class DatabaseInfo {
         //return authenticated;
         return res;
     }
-    
+
     public boolean addVoteUp(String fotoKreasiId) {
         boolean authenticated = false;
         String query = "UPDATE Foto_kreasi SET "
@@ -162,7 +162,7 @@ public class DatabaseInfo {
         }
         return authenticated;
     }
-    
+
     public boolean addVoteDown(String fotoKreasiId) {
         boolean authenticated = false;
         String query = "UPDATE Foto_kreasi SET "
@@ -182,7 +182,7 @@ public class DatabaseInfo {
         }
         return authenticated;
     }
-    
+
     public ArrayList<Tutorial> getAllTutorial() {
         String query = "SELECT * FROM tutorial";
 
@@ -192,14 +192,12 @@ public class DatabaseInfo {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 Tutorial b = new Tutorial(
-                        res.getInt("id"),
-                        res.getString("user_id"),
+                        ""+res.getInt("id"),
+                        res.getTimestamp("date_posted"),
+                        res.getString("difficulty"),
                         res.getString("title"),
                         res.getString("content"),
-                        res.getInt("total_like"),
-                        res.getString("date_posted"),
-                        res.getString("difficulty"),
-                        res.getString("kategori")
+                        res.getInt("total_like")
                 );
                 tutorialList.add(b);
             }
@@ -211,6 +209,32 @@ public class DatabaseInfo {
         return tutorialList;
     }
     
+    public ArrayList<Tutorial> getFeaturedTutorial() {
+        String query = "SELECT * FROM tutorial ORDER BY total_like DESC;";
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            for(int i = 0; i < 3; i++) {
+                Tutorial b = new Tutorial(
+                        ""+res.getInt("id"),
+                        res.getTimestamp("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+
     public ArrayList<Fotokreasi> getAllFotokreasi() {
         String query = "SELECT * FROM foto_kreasi";
 
