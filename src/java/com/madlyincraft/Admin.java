@@ -11,8 +11,8 @@ package com.madlyincraft;
  */
 public class Admin extends User {
 
-    public Admin(String username, String password, String display_picture) {
-        super(username, password, display_picture);
+    public Admin(String username, String password, String display_picture, String email) {
+        super(username, password, display_picture, email);
     }
 
 }

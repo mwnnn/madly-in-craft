@@ -15,7 +15,7 @@ public class RegisteredUser extends User {
     private String link;
 
     public RegisteredUser(String username, String password, String display_picture, String email, String link) {
-        super(username, password, display_picture);
+        super(username, password, display_picture, email);
         this.email = email;
         this.link = link;
     }
