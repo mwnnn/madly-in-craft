@@ -1,58 +1,56 @@
 <%-- 
-    Document   : display
-    Created on : Mar 27, 2014, 12:44:44 AM
+    Document   : category
+    Created on : Apr 12, 2014, 6:52:49 AM
     Author     : acer
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.madlyincraft.Tutorial"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.util.logging.Logger"%>
-<%@page import="java.util.logging.Level"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.util.List"%>
+<%@page import="com.madlyincraft.DatabaseInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<%@page import="com.madlyincraft.DatabaseInfo" %>
-<%@page import="com.madlyincraft.Comment" %>
-<%@page import="java.util.ArrayList" %>
-
-<jsp:include page="header.jsp"></jsp:include>
-<h4>Search Result(s):</h4>
-
-<%
-    Class.forName("com.mysql.jdbc.Driver");
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mic_db?zeroDateTimeBehavior=convertToNull", "root", "");
-    Statement statement = connection.createStatement();
-
-    String key = "";
-    if (request.getMethod() == "GET") {
-        key = request.getParameter("keyword");
-    }
-    ArrayList<Tutorial> tList = new ArrayList<Tutorial>();
-    String query = "SELECT * FROM TUTORIAL WHERE TITLE LIKE '%" + key + "%';";
-    statement.executeQuery(query);
-    ResultSet resultset = statement.executeQuery(query);
-    while (resultset.next()) {
-        Tutorial t = new Tutorial(
-                resultset.getString("user_id"),
-                resultset.getTimestamp("date_posted"),
-                resultset.getString("difficulty"),
-                resultset.getString("title"),
-                resultset.getString("content"),
-                resultset.getInt("total_like")
-        );
-        tList.add(t);
-    }
-    for (Tutorial t : tList) {
+<%! ArrayList<Tutorial> tList = new ArrayList<Tutorial>();
+    String url;
+    String heading;
 %>
+<%
+    DatabaseInfo db = new DatabaseInfo();
+    if (request.getMethod() == "GET") {
+         tList = db.getByKeyword(request.getParameter("keyword"));
+         heading = "Search Result(s) for  '" + request.getParameter("keyword") + "'";
+    }
+%>
+<!DOCTYPE html>
+<jsp:include page="header.jsp"></jsp:include>
 
-<p><%= t.getTitle()%></p>
-<p><%= t.getTotal_like()%> Likes</p>
-<p><%= t.getContent()%></p>
-<hr />
-<% }%>
-</body>
-</html>
+    <h2><%= heading%></h2>
+    <br>
+
+    <div class="row">
+        <% for(Tutorial t: tList){ 
+            url = "tutorial.jsp?id=" + t.getId();
+        %>
+        <div class="col-xs-6 col-md-3">
+            <a href="<%= url %>" class="thumbnail">
+                <img src="<%= t.getFeatured_image()%>">
+            </a>
+            <h4><%=t.getTitle()%></h4>
+        </div>
+        <%}%>
+    </div><!-- latest tutorial thumbnails -->
+    <!--
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    -->
+ 
+
+<jsp:include page="footer.jsp"></jsp:include>

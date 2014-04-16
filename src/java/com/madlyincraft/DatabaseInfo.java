@@ -306,8 +306,8 @@ public class DatabaseInfo extends HttpServlet {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 Tutorial b = new Tutorial(
-                        res.getString("id"),
-                        res.getTimestamp("date_posted"),
+                        res.getInt("id"),
+                        res.getString("date_posted"),
                         res.getString("difficulty"),
                         res.getString("title"),
                         res.getString("content"),
@@ -333,8 +333,8 @@ public class DatabaseInfo extends HttpServlet {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 Tutorial b = new Tutorial(
-                        res.getString("id"),
-                        res.getTimestamp("date_posted"),
+                        res.getInt("id"),
+                        res.getString("date_posted"),
                         res.getString("difficulty"),
                         res.getString("title"),
                         res.getString("content"),
@@ -415,6 +415,27 @@ public class DatabaseInfo extends HttpServlet {
             closeConnection();
         }
         return t;
+    }
+    
+    public ArrayList<Kategori> getKategori() {
+        String query = "SELECT * FROM kategori";
+
+        ArrayList<Kategori> kList = new ArrayList<Kategori>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Kategori k = new Kategori(
+                        res.getString("NAMA_KATEGORI")
+                );
+                kList.add(k);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return kList;
     }
     
     public ArrayList<Fotokreasi> getAllFotokreasi() {
