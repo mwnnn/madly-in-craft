@@ -368,8 +368,8 @@ public class DatabaseInfo extends HttpServlet {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 t = new Tutorial(
-                        res.getString("id"),
-                        res.getTimestamp("date_posted"),
+                        res.getInt("id"),
+                        res.getString("date_posted"),
                         res.getString("difficulty"),
                         res.getString("title"),
                         res.getString("content"),

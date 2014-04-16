@@ -27,6 +27,9 @@ public class Tutorial {
     private ArrayList<TutorialStep> step;
     private ArrayList<Material> bahan;
     private ArrayList<Comment> komentar;
+    
+    public Tutorial(){
+    }
 
     public Tutorial(int id, String user_id, String title, String content, int total_like, String date_posted, String difficulty, String kategori, String featured_image, String status) {
         this.id = id;
@@ -41,6 +44,30 @@ public class Tutorial {
         this.status = status;
     }
 
+     public Tutorial(int Id, String date_posted, String difficulty, String title, String content, int total_like, String urlImage) {
+        this.id = Id;
+        this.date_posted = date_posted;
+        this.difficulty = difficulty;
+        this.title = title;
+        this.content = content;
+        this.total_like = total_like;
+        this.featured_image = urlImage;
+    }
+
+    public Tutorial(String Id, String date_posted, String difficulty, String title, String content, int total_like, String urlImage, ArrayList<TutorialStep> steps, ArrayList<Material> materials, ArrayList<Comment> comments){
+        this.id = id;
+        this.date_posted = date_posted;
+        this.difficulty = difficulty;
+        this.title = title;
+        this.content = content;
+        this.total_like = total_like;
+        this.featured_image = urlImage;
+        this.step = steps;
+        this.bahan = materials;
+        this.komentar = comments;
+    }
+    
+    
     public int getId() {
         return id;
     }
