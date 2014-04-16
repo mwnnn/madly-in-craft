@@ -245,7 +245,7 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<User> getFeaturedMember() {
-        String query = "SELECT * FROM user ORDER BY total_like DESC LIMIT 3";
+        String query = "SELECT * FROM user u, tutorial t ORDER BY t.total_like WHERE u.username = t.user_id DESC LIMIT 3";
 
         ArrayList<User> userList = new ArrayList<User>();
         try {
