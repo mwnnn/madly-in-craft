@@ -6,6 +6,7 @@
 package com.madlyincraft;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +24,9 @@ public class Tutorial {
     private String kategori;
     private String featured_image;
     private String status;
+    private ArrayList<TutorialStep> step;
+    private ArrayList<Material> bahan;
+    private ArrayList<Comment> komentar;
 
     public Tutorial(int id, String user_id, String title, String content, int total_like, String date_posted, String difficulty, String kategori, String featured_image, String status) {
         this.id = id;
@@ -116,6 +120,29 @@ public class Tutorial {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-   
+
+    public ArrayList<TutorialStep> getStep() {
+        return step;
+    }
+
+    public void setStep(ArrayList<TutorialStep> step) {
+        this.step = step;
+    }
+
+    public ArrayList<Material> getBahan() {
+        return bahan;
+    }
+
+    public void setBahan(ArrayList<Material> bahan) {
+        this.bahan = bahan;
+    }
+
+    public ArrayList<Comment> getKomentar() {
+        return komentar;
+    }
+
+    public void setKomentar(ArrayList<Comment> komentar) {
+        this.komentar = komentar;
+    }
+
 }

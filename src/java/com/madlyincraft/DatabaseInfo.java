@@ -245,8 +245,7 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<User> getFeaturedMember() {
-        String query = "SELECT * FROM user u, tutorial t ORDER BY t.total_like WHERE u.username = t.user_id DESC LIMIT 3";
-
+        String query = "SELECT * FROM TUTORIAL, USER WHERE USER.USERNAME = TUTORIAL.USER_ID ORDER BY tutorial.total_like DESC;";
         ArrayList<User> userList = new ArrayList<User>();
         try {
             openConnection();
@@ -298,6 +297,126 @@ public class DatabaseInfo extends HttpServlet {
         return tutorialList;
     }
 
+    public ArrayList<Tutorial> getByCategory(String kategori) {
+        String query = "SELECT * FROM tutorial WHERE KATEGORI='" +kategori+"';" ;
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Tutorial b = new Tutorial(
+                        res.getString("id"),
+                        res.getTimestamp("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("featured_image")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+    
+    public ArrayList<Tutorial> getByKeyword(String keyword) {
+        String query = "SELECT * FROM tutorial WHERE TITLE LIKE '%" +keyword+"%' OR CONTENT LIKE '%" +keyword+"%';" ;
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Tutorial b = new Tutorial(
+                        res.getString("id"),
+                        res.getTimestamp("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("featured_image")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+    
+    
+    public Tutorial getTutorialByID(String id) {
+        Tutorial t = new Tutorial();
+        TutorialStep ts = new TutorialStep();
+        ArrayList<TutorialStep> tsList = new ArrayList<TutorialStep>();
+        String query = "SELECT * FROM TUTORIAL WHERE ID = '" + id + "';";
+        String query2 = "SELECT * FROM tutorial_steps WHERE TUTORIAL_ID = '" + id + "';";
+        String query3 = "SELECT * FROM comment WHERE TUTORIAL_ID ='" + id + "';";
+        ArrayList<Comment> cList = new ArrayList<Comment>();
+        String query4 = "SELECT * FROM material WHERE TUTORIAL_ID ='" + id + "';";
+        ArrayList<Material> mList = new ArrayList<Material>();
+
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                t = new Tutorial(
+                        res.getString("id"),
+                        res.getTimestamp("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("featured_image")
+                );
+            }
+            ResultSet res2 = stmt.executeQuery(query2);
+            while (res2.next()) {
+                ts = new TutorialStep(
+                        res2.getInt("nomor"),
+                        res2.getString("deskripsi"),
+                        res2.getString("link_gambar")
+                );
+                tsList.add(ts);
+            }
+
+            ResultSet resultset = stmt.executeQuery(query3);
+            while (resultset.next()) {
+                Comment c = new Comment(
+                        resultset.getString("id"),
+                        resultset.getString("content"),
+                        resultset.getTimestamp("date_posted"),
+                        resultset.getString("user_id")
+                );
+                cList.add(c);
+            }
+            
+            ResultSet resultset2 = stmt.executeQuery(query4);
+            while (resultset2.next()) {
+                Material m = new Material(
+                        resultset2.getInt("id"),
+                        resultset2.getString("nama")
+                );
+                mList.add(m);
+            }
+            t.setStep(tsList);
+            t.setKomentar(cList);
+            t.setBahan(mList);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return t;
+    }
+    
     public ArrayList<Fotokreasi> getAllFotokreasi() {
         String query = "SELECT * FROM foto_kreasi";
 
