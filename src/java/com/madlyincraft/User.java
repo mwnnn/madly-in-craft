@@ -14,11 +14,13 @@ public class User {
     private String username;
     private String password;
     private String display_picture;
+    private String email;
 
-    public User(String username, String password, String display_picture) {
+    public User(String username, String password, String display_picture, String email) {
         this.username = username;
         this.password = password;
         this.display_picture = display_picture;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -43,6 +45,14 @@ public class User {
 
     public void setDisplay_picture(String display_picture) {
         this.display_picture = display_picture;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

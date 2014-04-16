@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,30 +31,39 @@ public class RegisterHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("name");
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
             String passwordConfirm = request.getParameter("password_confirm");
+            String email = request.getParameter("email");
 
             if (username == null || username.length() == 0
                     || password == null || password.length() == 0
-                    || passwordConfirm == null || passwordConfirm.length() == 0) {
-                response.sendRedirect("error.jsp?code=5&back=index");
+                    || passwordConfirm == null || passwordConfirm.length() == 0
+                    || email == null || email.length() == 0) {
+                session.setAttribute("registerError", "not completed");
+                response.sendRedirect("register.jsp");
                 return;
             }
 
             if (!password.equals(passwordConfirm)) {
-                response.sendRedirect("error.jsp?code=6&back=index");
+                session.setAttribute("registerError", "password not match");
+                response.sendRedirect("register.jsp");
                 return;
             }
 
             DatabaseInfo db = new DatabaseInfo();
             try {
                 if (db.isUserExist(username)) {
-                    response.sendRedirect("error.jsp?code=7&back=index");
+                    session.setAttribute("registerError", "user exist");
+                    response.sendRedirect("register.jsp");
+                    return;
                 }
-                tryRegister(username, password);
-                response.sendRedirect("info.jsp?code=1&back=index");
+                tryRegister(username, password, email);
+                session.setAttribute("registerDone", "done");
+                response.sendRedirect("index.jsp");
                 return;
             } catch (Exception e) {
                 response.sendRedirect("error.jsp?code=4&back=index");
@@ -62,10 +72,9 @@ public class RegisterHandler extends HttpServlet {
         }
     }
 
-    private void tryRegister(String username, String password) {
+    private void tryRegister(String username, String password, String email) {
         DatabaseInfo db = new DatabaseInfo();
-        String query = "INSERT INTO user(username, password) VALUES ('" + username + "','" + password + "')";
-
+        String query = "INSERT INTO user VALUES ('" + username + "','" + password + "',null,'" + email + "')";
         db.doUpdate(query);
     }
 

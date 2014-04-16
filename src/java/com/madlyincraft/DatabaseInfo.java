@@ -9,12 +9,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServlet;
 
 /**
  *
  * @author putih
  */
-public class DatabaseInfo {
+public class DatabaseInfo extends HttpServlet {
 
     public static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     public static final String DATABASE_URL = "jdbc:mysql://localhost/madlyincraft";
@@ -186,18 +187,22 @@ public class DatabaseInfo {
     public ArrayList<Tutorial> getAllTutorial() {
         String query = "SELECT * FROM tutorial";
 
-        ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+        ArrayList<Tutorial> tutorialList = new ArrayList<>();
         try {
             openConnection();
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 Tutorial b = new Tutorial(
-                        ""+res.getInt("id"),
-                        res.getTimestamp("date_posted"),
-                        res.getString("difficulty"),
+                        res.getInt("id"),
+                        res.getString("user_id"),
                         res.getString("title"),
                         res.getString("content"),
-                        res.getInt("total_like")
+                        res.getInt("total_like"),
+                        res.getString("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("kategori"),
+                        res.getString("featured_image"),
+                        res.getString("status")
                 );
                 tutorialList.add(b);
             }
@@ -208,22 +213,80 @@ public class DatabaseInfo {
         }
         return tutorialList;
     }
-    
+
     public ArrayList<Tutorial> getFeaturedTutorial() {
-        String query = "SELECT * FROM tutorial ORDER BY total_like DESC;";
+        String query = "SELECT * FROM tutorial ORDER BY total_like DESC LIMIT 3";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
         try {
             openConnection();
             ResultSet res = stmt.executeQuery(query);
-            for(int i = 0; i < 3; i++) {
+            while (res.next()) {
                 Tutorial b = new Tutorial(
-                        ""+res.getInt("id"),
-                        res.getTimestamp("date_posted"),
-                        res.getString("difficulty"),
+                        res.getInt("id"),
+                        res.getString("user_id"),
                         res.getString("title"),
                         res.getString("content"),
-                        res.getInt("total_like")
+                        res.getInt("total_like"),
+                        res.getString("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("kategori"),
+                        res.getString("featured_image"),
+                        res.getString("status")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+
+    public ArrayList<User> getFeaturedMember() {
+        String query = "SELECT * FROM user ORDER BY total_like DESC LIMIT 3";
+
+        ArrayList<User> userList = new ArrayList<User>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                User u = new User(
+                        res.getString("username"),
+                        res.getString("password"),
+                        res.getString("display_picture"),
+                        res.getString("email")
+                );
+                userList.add(u);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return userList;
+    }
+
+    public ArrayList<Tutorial> getLatestTutorial() {
+        String query = "SELECT * FROM tutorial ORDER BY DATE_POSTED DESC LIMIT 0 , 8";
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Tutorial b = new Tutorial(
+                        res.getInt("id"),
+                        res.getString("user_id"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("kategori"),
+                        res.getString("featured_image"),
+                        res.getString("status")
                 );
                 tutorialList.add(b);
             }

@@ -45,7 +45,7 @@
 </form>
 <%
     Class.forName("com.mysql.jdbc.Driver");
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mic_db?zeroDateTimeBehavior=convertToNull", "root", "");
+    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/madlyincraft", "root", "");
     Statement statement = connection.createStatement();
 
     String query = "SELECT * FROM tutorial";

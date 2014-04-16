@@ -11,8 +11,8 @@
 <jsp:include page="header.jsp"></jsp:include>
 <% // get featured tutorial: tutorial yang punya like terbanyak
     DatabaseInfo db = new DatabaseInfo();
-    ArrayList<Tutorial> tutList = db.getFeaturedTutorial();
-    
+    ArrayList<Tutorial> tutList = new ArrayList<Tutorial>();
+    tutList = db.getFeaturedTutorial();
 %>
 <div class="row">
     <h2 class="heading">Featured</h2>
@@ -21,7 +21,8 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <a href="tutorial.jsp">
-                        <img src="http://placehold.it/650x450">
+                        <%//get image of the tuts%>
+                        <img src="<%=tutList.get(0).getFeatured_image()%>">
                     </a>
 
                     <div class="carousel-caption">
@@ -32,7 +33,8 @@
 
                 <div class="item">
                     <a href="tutorial.jsp">
-                        <img src="http://placehold.it/650x450">
+                        <%//get image of the tuts%>
+                        <img src="<%=tutList.get(1).getFeatured_image()%>">
                     </a>
 
                     <div class="carousel-caption">
@@ -43,7 +45,8 @@
 
                 <div class="item">
                     <a href="tutorial.jsp">
-                        <img src="http://placehold.it/650x450">
+                        <%//get image of the tuts%>
+                        <img src="<%=tutList.get(2).getFeatured_image()%>">
                     </a>
 
                     <div class="carousel-caption">
@@ -58,33 +61,34 @@
         </div>
     </div><!--featured tutorial -->
 
+    <%ArrayList<Tutorial> creationList = new ArrayList<Tutorial>();
+        creationList = db.getFeaturedTutorial();%>
     <div class="col-md-5">
         <div id="slider2" class="carousel slide creation">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="http://placehold.it/450x215">
-
+                    <img src="<%=creationList.get(0).getFeatured_image()%>">
                     <div class="carousel-caption">
-                        <h4>Judul 1</h4>
-                        <p>Deskripsi 1</p>
+                        <h4><%=creationList.get(0).getTitle()%></h4>
+                        <p><%=creationList.get(0).getContent()%></p>
                     </div>
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/450x215">
+                    <img src="<%=creationList.get(1).getFeatured_image()%>">
 
                     <div class="carousel-caption">
-                        <h4>Judul 2</h4>
-                        <p>Deskripsi 2</p>
+                        <h4><%=creationList.get(1).getTitle()%></h4>
+                        <p><%=creationList.get(1).getContent()%></p>
                     </div>
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/450x215">
+                    <img src="<%=creationList.get(2).getFeatured_image()%>">
 
                     <div class="carousel-caption">
-                        <h4>Judul 3</h4>
-                        <p>Deskripsi 3</p>
+                        <h4><%=creationList.get(2).getTitle()%></h4>
+                        <p><%=creationList.get(2).getContent()%></p>
                     </div>
                 </div>
             </div>
@@ -93,31 +97,33 @@
             <a class="right carousel-control" href="#slider2" data-slide="next">&rsaquo;</a>
         </div><!-- featured creation -->
 
+        <%ArrayList<User> featuredMemberList = new ArrayList<User>();
+            featuredMemberList = db.getFeaturedMember();%>
         <div id="slider3" class="carousel slide">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="http://placehold.it/450x215">
+                      <img src="<%=featuredMemberList.get(0).getDisplay_picture()%>">
 
                     <div class="carousel-caption">
-                        <h4>Judul 1</h4>
-                        <p>Deskripsi 1</p>
+                        <h4><%=featuredMemberList.get(0).getUsername()%></h4>
+                        <p>deskripsi 1</p>
                     </div>
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/450x215">
+                    <img src="<%=featuredMemberList.get(1).getDisplay_picture()%>">
 
                     <div class="carousel-caption">
-                        <h4>Judul 2</h4>
-                        <p>Deskripsi 2</p>
+                        <h4><%=featuredMemberList.get(1).getUsername()%></h4>
+                        <p>deskripsi 2</p>
                     </div>
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/450x215">
+                    <img src="<%=featuredMemberList.get(2).getDisplay_picture()%>">
 
                     <div class="carousel-caption">
-                        <h4>Judul 3</h4>
+                       <h4><%=featuredMemberList.get(2).getUsername()%></h4>
                         <p>Deskripsi 3</p>
                     </div>
                 </div>

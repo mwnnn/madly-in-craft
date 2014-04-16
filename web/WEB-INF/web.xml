@@ -13,10 +13,6 @@
         <servlet-class>com.madlyincraft.RegisterHandler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BookViewer</servlet-name>
-        <servlet-class>com.madlyincraft.BookViewer</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EditProfileHandler</servlet-name>
         <servlet-class>com.madlyincraft.EditProfileHandler</servlet-class>
     </servlet>
@@ -35,10 +31,6 @@
     <servlet-mapping>
         <servlet-name>RegisterHandler</servlet-name>
         <url-pattern>/RegisterHandler</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BookViewer</servlet-name>
-        <url-pattern>/BookViewer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditProfileHandler</servlet-name>

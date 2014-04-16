@@ -33,7 +33,7 @@ public class LoginHandler extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String username = request.getParameter("name");
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
 
             if (username == null || username.length() == 0) {
