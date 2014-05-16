@@ -23,20 +23,20 @@
 
 
 <%
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mic_db?zeroDateTimeBehavior=convertToNull", "root", "");
-        Statement statement = connection.createStatement();
+        DatabaseInfo db = new DatabaseInfo();
         Calendar calendar = Calendar.getInstance();
         String userID = "";
         String isi = "";
-        if (request.getMethod() == "GET") {
+        String tutID = "";
+        if (request.getMethod() == "POST") {
             userID = request.getParameter("uid");
             isi = request.getParameter("komentar");
+            tutID = request.getParameter("tutorialId");
         }
         
-        String query = "INSERT INTO comment VALUES (null, 3,'" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "');";
-        statement.executeUpdate (query);
-        response.sendRedirect("comments.jsp");
+        String query = "INSERT INTO comment VALUES (null,'" + tutID + "','" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "');";
+        db.doUpdate(query);
+        response.sendRedirect("tutorial.jsp?id=1");
     %>
             
 </body>

@@ -6,7 +6,10 @@
 package com.madlyincraft;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
@@ -126,10 +129,9 @@ public class DatabaseInfo extends HttpServlet {
     public int addLike(String tutorialId) {
         boolean authenticated = false;
         int res = 0;
-        int id = Integer.parseInt(tutorialId);
         String query = "UPDATE tutorial SET "
                 + "total_like=total_like + 1"
-                + "WHERE id=" + id;
+                + "WHERE id='" + tutorialId + "'";
         try {
             openConnection();
             res = stmt.executeUpdate(query);
@@ -298,7 +300,7 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<Tutorial> getByCategory(String kategori) {
-        String query = "SELECT * FROM tutorial WHERE KATEGORI='" +kategori+"';" ;
+        String query = "SELECT * FROM tutorial WHERE KATEGORI='" + kategori + "';";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
         try {
@@ -323,9 +325,9 @@ public class DatabaseInfo extends HttpServlet {
         }
         return tutorialList;
     }
-    
+
     public ArrayList<Tutorial> getByKeyword(String keyword) {
-        String query = "SELECT * FROM tutorial WHERE TITLE LIKE '%" +keyword+"%' OR CONTENT LIKE '%" +keyword+"%';" ;
+        String query = "SELECT * FROM tutorial WHERE TITLE LIKE '%" + keyword + "%' OR CONTENT LIKE '%" + keyword + "%';";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
         try {
@@ -350,8 +352,7 @@ public class DatabaseInfo extends HttpServlet {
         }
         return tutorialList;
     }
-    
-    
+
     public Tutorial getTutorialByID(String id) {
         Tutorial t = new Tutorial();
         TutorialStep ts = new TutorialStep();
@@ -397,7 +398,7 @@ public class DatabaseInfo extends HttpServlet {
                 );
                 cList.add(c);
             }
-            
+
             ResultSet resultset2 = stmt.executeQuery(query4);
             while (resultset2.next()) {
                 Material m = new Material(
@@ -416,7 +417,7 @@ public class DatabaseInfo extends HttpServlet {
         }
         return t;
     }
-    
+
     public ArrayList<Kategori> getKategori() {
         String query = "SELECT * FROM kategori";
 
@@ -437,7 +438,7 @@ public class DatabaseInfo extends HttpServlet {
         }
         return kList;
     }
-    
+
     public ArrayList<Fotokreasi> getAllFotokreasi() {
         String query = "SELECT * FROM foto_kreasi";
 
@@ -465,19 +466,95 @@ public class DatabaseInfo extends HttpServlet {
         return fotokreasiList;
     }
 
-    public String addTutorial(String isbn, String title, String editionNumber, String publisher, String price) {
-        String query = "INSERT INTO titles VALUES (" + isbn + ",'" + title + "'," + editionNumber + ",'" + publisher + "'," + price + ")";
-
+    public String addTutorial(String userId, String title, String category, String imageLink, String description, String difficulty, ArrayList<Material> material, ArrayList<TutorialStep> tutStep) {
+        // get latest tutorial id
+        String tutorialIdQuery = "SELECT `ID` FROM `tutorial` ORDER BY `tutorial`.`ID`  DESC LIMIT 0,1";
+        int tutorialId = 0;
         try {
             openConnection();
-            stmt.executeUpdate(query);
-            return "Pengisian buku berhasil!";
+            ResultSet res = stmt.executeQuery(tutorialIdQuery);
+            tutorialId = res.getInt("id") + 1;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
-            return "Pengisian buku gagal. Coba cek lagi data pengisian.";
+            return "";
         } finally {
             closeConnection();
         }
+        // end of get latest tutorial id
+
+        // add materials
+        String materials[] = new String[material.size()];
+        // create materials query
+        String addMaterialsQuery = "INSERT INTO  `madlyincraft`.`material` VALUES ";
+        for (int i = 0; i < materials.length; i++) {
+            if (i == materials.length - 1) {
+                addMaterialsQuery += "(" + material.get(i).getId() + "," + tutorialId + ",'" + material.get(i).getNama() + "')";
+            } else {
+                addMaterialsQuery += "(" + material.get(i).getId() + "," + tutorialId + ",'" + material.get(i).getNama() + "'), ";
+            }
+        }
+        // add materials to db
+        try {
+            openConnection();
+            stmt.executeUpdate(addMaterialsQuery);
+            //return "Pengisian material berhasil";
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+            //return "Pengisian material gagal";
+        } finally {
+            closeConnection();
+        }
+        // end of add materials
+
+        // add tutorial steps
+        String tutSteps[] = new String[tutStep.size()];
+        // create tutorial steps query
+        String addTutorialStepsQuery = "INSERT INTO  `madlyincraft`.`tutorial_steps` VALUES ";
+        for (int i = 0; i < materials.length; i++) {
+            int num = i + 1;
+            if (i == materials.length - 1) {
+                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + ",'" + tutStep.get(i).getLink_gambar() + "')";
+            } else {
+                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + ",'" + tutStep.get(i).getLink_gambar() + "')";
+            }
+        }
+        // add tutorial steps to db
+        try {
+            openConnection();
+            stmt.executeUpdate(addTutorialStepsQuery);
+            //return "Pengisian material berhasil";
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+            //return "Pengisian material gagal";
+        } finally {
+            closeConnection();
+        }
+        // end of add tutorial steps
+
+        // get current time
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+        //System.out.println(dateFormat.format(cal.getTime()));
+        
+        // add tutorial
+        // create query
+        String query = "INSERT INTO  `madlyincraft`.`tutorial` VALUES (" + tutorialId + ",'" + userId + "','" + title + "','" + description + "'," + 0 + "," + date +",'"+difficulty+"','"+category+"','"+imageLink+"','unapproved')";
+        // add tutorial to db
+        try {
+            openConnection();
+            stmt.executeUpdate(query);
+            //return "Pengisian tutorial berhasil";
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+            //return "Pengisian tutorial gagal";
+        } finally {
+            closeConnection();
+        }
+        // end of add tutorial
+        
+        return "true";
+
     }
 
     public int doUpdate(String query) {

@@ -10,6 +10,12 @@ and open the template in the editor.
 
 @import url('bootstrap.css');
 
+.menunav {
+    margin-top: 20px;
+}
+.navbar-inverse {
+    background-color: transparent;
+}
 .navigation {
     margin-top: 90px;
     margin-bottom: 80px;
@@ -17,13 +23,10 @@ and open the template in the editor.
 .buttons {
     width: 280px;
 }
-.mascot {
-}
-.mascotw {
-    width: 20%;
-    position:absolute;
-    left: 40%;
-    z-index:1;
+.mascotw{
+    position: absolute;
+    z-index:-1;
+    margin-top: 10px;
 }
 .creation {
     margin-bottom: 20px;
@@ -47,7 +50,7 @@ footer {
     height: 90px;
     padding-top: 20px;
 }
-.footer {
+.centerpos {
     margin: auto;
     text-align: center;
 }
@@ -97,8 +100,54 @@ footer {
     padding-bottom: 20px;
 }
 .usrcomment {
+    border: 2px;
+    border-style: solid;
+    border-color: #999999;
+}
+.boxcolor {
     background: #999999;
 }
-.cmntbox {
-    background: #999999;
+.topleft {
+    vertical-align: top;
+    text-align: left;
+}
+.commentpad2 {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.commentpad3 {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+.commentpad4 {
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.ctr {
+    text-align: center;
+}
+.category {
+    border:2px solid #EEE;
+    border-radius:5px; 
+    margin:5px; 
+    padding:5px; 
+    height:160px;
+}
+.muted {
+    color: #999999;
+}
+.nopadr {
+    padding-right: 0;
+}
+.mbottom-10 {
+    margin-bottom: 10px;
+}
+.mtop-50{
+    margin-top: 50px;
+}
+.carousel-title {
+    position: absolute;
+    z-index: 2;
+    font-weight: bold;
+    color: white;
 }

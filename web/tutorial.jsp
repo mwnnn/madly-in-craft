@@ -25,14 +25,21 @@
                 userID = request.getParameter("uid");
                 isi = request.getParameter("komentar");
                 tutID = request.getParameter("tutorialID");
-            }
 
-            String query = "INSERT INTO comment VALUES (null,'" + tutID + "','" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "');";
-            db.doUpdate(query);
-            response.sendRedirect("tutorial.jsp?id=" + tutID);
+                out.println(tutID);
+                String query = "INSERT INTO comment VALUES (null,'" + tutID + "','" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "');";
+                db.doUpdate(query);
+                response.sendRedirect("tutorial.jsp?id=" + tutID);
+            }
         }
-        if (request.getParameter("action").equalsIgnoreCase("like")) {
-            db.addLike(String.valueOf(t.getId()));
+        if (request.getParameter("action").equalsIgnoreCase("Like")) {
+            String query = "UPDATE tutorial SET"
+                    + " total_like=total_like + 1"
+                    + " WHERE id='" + request.getParameter("id") + "'";
+            out.println(query);
+            db.doUpdate(query);
+
+            //db.addLike(request.getParameter("id"));
         }
     }
     if (request.getMethod() == "GET") {
@@ -40,51 +47,66 @@
     }
 %>
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Madly In Craft: <%= t.getTitle() %></title>
+
+        <!-- Bootstrap -->
+        <link href="css/style.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
 <jsp:include page="header.jsp"></jsp:include>
 
     <div class="row">
         <h2 class="heading"><%=t.getTitle()%></h2>
     <div class="col-md-7">
-        <img src=<%= t.getFeatured_image()%>
+        <img class="img-responsive" src=<%= t.getFeatured_image()%>>
     </div><!--foto tutorial -->
 
     <div class="col-md-5">
         <div class="description">
-            <table width="450" height="240">
+            <table>
                 <tr>
                     <td class="topleft">
-                        <h3 style="margin-top: 0">Deskripsi</h3>
-                        <p> <%= t.getContent()%> </p>
+                        <h3 style="margin-top: 0">Description</h3>
+                        <p>
+                            <%= t.getContent()%>
+                        </p>
                         <p>Tingkat kesulitan : <%= t.getDifficulty()%></p>
-
                     </td>
                 </tr>
             </table>
         </div><!-- Deskripsi/Intro -->
         <div class="mbottom">
-            <form method="POST">
-                <!--<img src="http://placehold.it/450x50">-->
-                <input type="submit" name="action" value="Like">
-            </form>
-            
+            <img class="img-responsive" src="http://placehold.it/450x50">
         </div><!-- Time -->
         <div class="mbottom">
-            <img src="http://placehold.it/450x50">
+            <img class="img-responsive" src="http://placehold.it/450x50">
         </div><!-- Difficulty -->
 
         <div class="row"> 
-            <div class="col-md-4">Share</div>
-            <div class="col-md-8">Like</div>
-        </div><!-- share label -->
+            <div class="col-md-7">Share</div>
+            <div class="col-md-5">Love this tutorial?</div>
+        </div><!-- share and like label -->
 
         <div class="row">
-            <div class="col-md-4">
-                <img class="share" src="http://placehold.it/30x30"><!-- facebook -->
-                <img src="http://placehold.it/30x30"><!-- twitter -->
+            <div class="col-md-7">
+                <img class="img-responsive share" src="http://3.bp.blogspot.com/-kRWxNK5xqEU/U08RWdLDU1I/AAAAAAAABFY/H_g7oHfJX0k/s1600/FB-f-Logo__blue_30.png"><!-- facebook -->
+                <img class="img-responsive" src="http://1.bp.blogspot.com/-0z2GGxmTRUs/U08RWcUyyrI/AAAAAAAABFc/DVXZBXPHxMQ/s1600/Twitter_logo_white_30.png"><!-- twitter -->
             </div>
-            <div class="col-md-8">
-                <img src="http://placehold.it/30x30"><!-- like button -->
-                <img src="http://placehold.it/130x30"><!-- number of like -->
+            <div class="col-md-5">
+                <form method="POST">
+                    <input type="hidden" name="id" value="<%=t.getId()%>">
+                    <input type="image" src="http://1.bp.blogspot.com/-wmIjVCcf2kE/U08TTD-JDHI/AAAAAAAABFs/Jytg4uRAJwE/s1600/love+button.png" value="Like"><!-- like button --> Love: <%=t.getTotal_like()%> <!-- number of like -->
+                </form>
             </div>
         </div>
 
@@ -112,13 +134,13 @@
     </div><!--list od supplies -->
 </div>
 
+<% ArrayList<TutorialStep> tsList = t.getStep();
+    for (TutorialStep ts : tsList) {
+%>
 <div class="row">
-    <% ArrayList<TutorialStep> tsList = t.getStep();
-        for (TutorialStep ts : tsList) {
-    %>
     <h2 class="heading">Instruction</h2>
-    <div class="col-md-7">
-        <img src = <%=ts.getLink_gambar()%>>
+    <div class="col-md-7 mbottom">
+        <img class="img-responsive" src = <%=ts.getLink_gambar()%>>
     </div><!--instruction -->
     <div class="col-md-5">
         <table width="450" height="450">
@@ -130,8 +152,8 @@
             </tr>
         </table>
     </div><!--Description -->
-    <%}%>
 </div>
+<%}%>               
 
 <div class="row">
     <h2 class="heading">Comments</h2>
@@ -143,9 +165,9 @@
                         <div class="form-group">
                             <textarea name="komentar" class="form-control" rows="3" placeholder="Write your comment..." value=""></textarea>
                         </div>
-                        <input type ="hidden" name="tutorialID" value="1" />
+                        <input type ="hidden" name="tutorialID" value="<%=t.getId()%>" />
                         <input type ="hidden" name="uid" value="Namanya Namanya" />
-                        <button type="submit" name="action" value="comment" class="btn btn-primary floatr">Post</button>
+                        <button type="submit" class="btn btn-primary floatr">Post</button>
                     </form>
                 </td></tr>
         </table>
@@ -178,6 +200,7 @@
         <p class="borderline"></p>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-7">
         <div class="row">

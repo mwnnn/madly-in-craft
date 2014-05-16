@@ -4,24 +4,12 @@
     Author     : acer
 --%>
 
+<%@page import="com.madlyincraft.DatabaseInfo"%>
+<%@page import="com.madlyincraft.Kategori"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Madly In Craft: Home</title>
 
-        <!-- Bootstrap -->
-        <link href="css/style.css" rel="stylesheet" media="screen">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
     <body>
         <%
             HttpSession sess = request.getSession();
@@ -62,18 +50,50 @@
                     sess.setAttribute("registerError", null);
                 }
             }
-        %>    
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
+            DatabaseInfo db = new DatabaseInfo();
+            ArrayList<Kategori> kList = db.getKategori();
+        %>   
+        <div class="container">
+            <div class="row menunav">
+                <div><a href="index.jsp"><img class="img-responsive mascotw" src="images/menubar.png"/></div>
+                <nav class="navbar navbar-inverse navigation" role="navigation">
+                    <div class="container-fluid">
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.jsp">Madly In Craft</a>
+                      </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <%for (Kategori k : kList) {%>
+                                    <li><a href="category.jsp?kategori=<%=k.getNama_kategori()%>"><%=k.getNama_kategori()%></a></li>
+                                    <%}%>
+                                </ul>
+                            </li>
 
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.jsp">Home</a></li>
-                    </ul>
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <form class="navbar-form navbar-left buttons" action="search.jsp" method="GET" role="search">
+                                        <div class="form-group">
+                                            <input type="text" name="keyword" class="form-control" placeholder="Search">
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+                                </ul>
+                            </li>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
+                          <li><a href="gallery.jsp">Gallery</a></li>
+
+                          <li class="dropdown">
                             <% if (!logged) {%>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -100,57 +120,32 @@
                                 <li class="divider"></li>
                             </ul>
                             <% } else { %>
-                            halo kamu
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                  <li>
+                                      <a href="profile.jsp">My Profile</a>
+                                  </li>
+                                  <li>
+                                      <a href="editProfile.jsp">Edit Profile</a>
+                                  </li>
+                                  <li>
+                                      <a href="tutorialUser.jsp">My Tutorial</a>
+                                  </li>
+                                  <li>
+                                      <a href="addTutorial.jsp">Write Tutorial</a>
+                                  </li>
+                                  <li>
+                                      <a href="gallery.jsp">My Gallery</a>
+                                  </li>
+                                  <li>
+                                      <a href="index.jsp?logout" name="logout">Logout</a>
+                                  </li>
+                                </ul>
                             <% }%>
-                        </li>
-                    </ul>
-
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav><!-- header navigation -->
-
-        <div class="container">
-            <div class="mascot"><a href="index.jsp"><img class="mascotw" src="images/mascot.png"/></a></div>
-            <nav class="navbar navbar-inverse navigation" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="index.jsp">Madly In Craft</a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="category.jsp">Sewing</a></li>
-                                    <li><a href="category.jsp">Art</a></li>
-                                    <li><a href="category.jsp">Papercraft</a></li>
-                                    <li><a href="category.jsp">Jewelry</a></li>
-                                    <li><a href="category.jsp">Other</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <form class="navbar-form navbar-left buttons" role="search">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search">
-                                        </div>
-                                        <button type="submit" class="btn btn-default">Submit</button>
-                                    </form>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">Gallery</a></li>
+                          </li>
                         </ul>
 
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav><!-- menu navigation -->
+                      </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                  </nav><!-- menu navigation -->
+            </div>

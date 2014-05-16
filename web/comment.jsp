@@ -34,7 +34,7 @@
                                   <button type="submit" class="btn btn-primary floatr">Post</button>
                                 </div>
                             </div>
-                        </tr></td>
+                            </td></tr>
                     </table>
                   </div>
               </div><!-- comment other -->            
@@ -55,7 +55,7 @@
                               <table frame="box" width="535" height="70" class="usrcomment">
                                 <div class="row">
                                     <tr>
-                                    <div class="col-md-8"><td class="commentpad2">Namanya Namanya</td></div>
+                                        <div class="col-md-8"><td class="commentpad2">Namanya Namanya</td></div>
                                         <div class="col-md-4"><td class="floatr commentpad3">Timestamp</td></div>
                                     </tr>
                                 </div>

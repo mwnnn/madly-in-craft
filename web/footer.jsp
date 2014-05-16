@@ -8,7 +8,7 @@
 <!DOCTYPE html>
         </div><!-- container -->
         <footer>
-            <table class="footer">
+            <table class="centerpos">
                 <tr>
                     <td><span class="glyphicon glyphicon-heart heart"></span><a href="index.jsp">Home</a></td>
                     <td><span class="glyphicon glyphicon-heart heart"></span><a href="#">About</a></td>
