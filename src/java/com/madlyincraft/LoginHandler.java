@@ -42,7 +42,7 @@ public class LoginHandler extends HttpServlet {
             }
 
             if (password == null || password.length() == 0) {
-                response.sendRedirect("error.jsp?code=l&back=index");
+                response.sendRedirect("error.jsp?code=2&back=index");
                 return;
             }
             

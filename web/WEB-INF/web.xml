@@ -13,16 +13,16 @@
         <servlet-class>com.madlyincraft.EditProfileHandler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>com.madlyincraft.UploadServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddTutorialHandler</servlet-name>
         <servlet-class>com.madlyincraft.AddTutorialHandler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddTutsHandler</servlet-name>
-        <servlet-class>com.madlyincraft.AddTutsHandler</servlet-class>
+        <servlet-name>UploadServlet2</servlet-name>
+        <servlet-class>com.madlyincraft.UploadServlet2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.madlyincraft.UploadServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginHandler</servlet-name>
@@ -37,16 +37,16 @@
         <url-pattern>/EditProfileHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UploadServlet</servlet-name>
-        <url-pattern>/UploadServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AddTutorialHandler</servlet-name>
         <url-pattern>/AddTutorialHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddTutsHandler</servlet-name>
-        <url-pattern>/AddTutsHandler</url-pattern>
+        <servlet-name>UploadServlet2</servlet-name>
+        <url-pattern>/UploadServlet2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/UploadServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -57,7 +57,7 @@
         <description>Location to store uploaded file</description>
         <param-name>file-upload</param-name>
         <param-value>
-            c:\upload\
+            upload\
         </param-value>
     </context-param>
 </web-app>

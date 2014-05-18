@@ -114,10 +114,8 @@ public class DatabaseInfo extends HttpServlet {
         try {
             openConnection();
 
-            ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                authenticated = res.getInt(1) == 1;
-            }
+            int res = stmt.executeUpdate(query);
+           
         } catch (SQLException e) {
 
         } finally {
@@ -154,10 +152,10 @@ public class DatabaseInfo extends HttpServlet {
         try {
             openConnection();
 
-            ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                authenticated = res.getInt(1) == 1;
-            }
+            int res = stmt.executeUpdate(query);
+//            while (res.next()) {
+//                authenticated = res.getInt(1) == 1;
+//            }
         } catch (SQLException e) {
 
         } finally {
@@ -174,10 +172,10 @@ public class DatabaseInfo extends HttpServlet {
         try {
             openConnection();
 
-            ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                authenticated = res.getInt(1) == 1;
-            }
+            int res = stmt.executeUpdate(query);
+//            while (res.next()) {
+//                authenticated = res.getInt(1) == 1;
+//            }
         } catch (SQLException e) {
 
         } finally {
@@ -466,28 +464,31 @@ public class DatabaseInfo extends HttpServlet {
         return fotokreasiList;
     }
 
-    public String addTutorial(String userId, String title, String category, String imageLink, String description, String difficulty, ArrayList<Material> material, ArrayList<TutorialStep> tutStep) {
+    public int addTutorial(String userId, String title, String category, String imageLink, String description, String difficulty, ArrayList<Material> material, ArrayList<TutorialStep> tutStep) {
         // get latest tutorial id
-        String tutorialIdQuery = "SELECT `ID` FROM `tutorial` ORDER BY `tutorial`.`ID`  DESC LIMIT 0,1";
+        String tutorialIdQuery = "SELECT `ID` FROM `madlyincraft`.`tutorial` ORDER BY `tutorial`.`ID`  DESC LIMIT 0,1";
         int tutorialId = 0;
         try {
             openConnection();
             ResultSet res = stmt.executeQuery(tutorialIdQuery);
-            tutorialId = res.getInt("id") + 1;
+            if (res.next()) {
+            tutorialId = res.getInt("ID") + 1;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
+            System.out.println("ambil latest tuto id gagal");
+            //return "";
         } finally {
             closeConnection();
         }
+        System.out.println(tutorialId);
         // end of get latest tutorial id
 
         // add materials
-        String materials[] = new String[material.size()];
         // create materials query
         String addMaterialsQuery = "INSERT INTO  `madlyincraft`.`material` VALUES ";
-        for (int i = 0; i < materials.length; i++) {
-            if (i == materials.length - 1) {
+        for (int i = 0; i < material.size(); i++) {
+            if (i == material.size() - 1) {
                 addMaterialsQuery += "(" + material.get(i).getId() + "," + tutorialId + ",'" + material.get(i).getNama() + "')";
             } else {
                 addMaterialsQuery += "(" + material.get(i).getId() + "," + tutorialId + ",'" + material.get(i).getNama() + "'), ";
@@ -507,15 +508,14 @@ public class DatabaseInfo extends HttpServlet {
         // end of add materials
 
         // add tutorial steps
-        String tutSteps[] = new String[tutStep.size()];
         // create tutorial steps query
         String addTutorialStepsQuery = "INSERT INTO  `madlyincraft`.`tutorial_steps` VALUES ";
-        for (int i = 0; i < materials.length; i++) {
+        for (int i = 0; i < tutStep.size(); i++) {
             int num = i + 1;
-            if (i == materials.length - 1) {
-                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + ",'" + tutStep.get(i).getLink_gambar() + "')";
+            if (i == tutStep.size() - 1) {
+                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + "','" + tutStep.get(i).getLink_gambar() + "')";
             } else {
-                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + ",'" + tutStep.get(i).getLink_gambar() + "')";
+                addTutorialStepsQuery += "(" + tutorialId + "," + num + ",'" + tutStep.get(i).getDeskripsi() + "','" + tutStep.get(i).getLink_gambar() + "'), ";
             }
         }
         // add tutorial steps to db
@@ -532,18 +532,19 @@ public class DatabaseInfo extends HttpServlet {
         // end of add tutorial steps
 
         // get current time
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         //System.out.println(dateFormat.format(cal.getTime()));
-        
+
         // add tutorial
         // create query
-        String query = "INSERT INTO  `madlyincraft`.`tutorial` VALUES (" + tutorialId + ",'" + userId + "','" + title + "','" + description + "'," + 0 + "," + date +",'"+difficulty+"','"+category+"','"+imageLink+"','unapproved')";
+        String query = "INSERT INTO  `madlyincraft`.`tutorial` VALUES (" + tutorialId + ",'" + userId + "','" + title + "','" + description + "'," + 0 + ",'" + date + "','" + difficulty + "','" + category + "','" + imageLink + "','unapproved')";
         // add tutorial to db
+        int resInt = 0;
         try {
             openConnection();
-            stmt.executeUpdate(query);
+            resInt = stmt.executeUpdate(query);
             //return "Pengisian tutorial berhasil";
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -552,8 +553,8 @@ public class DatabaseInfo extends HttpServlet {
             closeConnection();
         }
         // end of add tutorial
-        
-        return "true";
+
+        return resInt;
 
     }
 

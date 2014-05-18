@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/tutorial.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/creation.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/footer.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/register.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/header.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/index.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/profile.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/css/style.css</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/addTutorial.jsp</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/MadlyInCraft/web/css/bootstrap.css</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/uploadimage.jsp</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/DatabaseInfo.java</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/UploadServlet2.java</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/addTutorial.jsp</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/AddTutorialHandler.java</file>
         </group>
     </open-files>
 </project-private>

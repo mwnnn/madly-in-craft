@@ -29,7 +29,7 @@
             <table>
                 <tr>
                     <td>nama</td>
-                    <td> <input name="name" type="text" id="name" /> </td>
+                    <td> <input name="username" type="text" id="username" /> </td>
                 </tr>
                 <tr>
                     <td>password</td>

@@ -68,7 +68,7 @@
     <div class="row">
         <h2 class="heading"><%=t.getTitle()%></h2>
     <div class="col-md-7">
-        <img class="img-responsive" src=<%= t.getFeatured_image()%>>
+        <img class="img-responsive" src="uploads/<%= t.getFeatured_image()%>">
     </div><!--foto tutorial -->
 
     <div class="col-md-5">
@@ -140,7 +140,7 @@
 <div class="row">
     <h2 class="heading">Instruction</h2>
     <div class="col-md-7 mbottom">
-        <img class="img-responsive" src = <%=ts.getLink_gambar()%>>
+        <img class="img-responsive" src = "uploads/<%=ts.getLink_gambar()%>">
     </div><!--instruction -->
     <div class="col-md-5">
         <table width="450" height="450">

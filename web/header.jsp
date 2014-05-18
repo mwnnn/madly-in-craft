@@ -15,11 +15,15 @@
             HttpSession sess = request.getSession();
             Object usernameObj = sess.getAttribute("username");
             boolean logged = false;
+            
+            String username = "";
 
+            // cek session
             if (request.getParameter("logout") != null) {
                 sess.setAttribute("username", null);
             } else if (usernameObj != null) {
                 logged = true;
+                username = (String) usernameObj;
             }
 
             if (request.getServletPath().equalsIgnoreCase("/register.jsp")) {
