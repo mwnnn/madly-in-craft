@@ -5,6 +5,8 @@
  */
 package com.madlyincraft;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author putih
@@ -15,12 +17,21 @@ public class User {
     private String password;
     private String display_picture;
     private String email;
+    private ArrayList<Message> pesan;
+    private ArrayList<String> link;
+    private String description;
 
     public User(String username, String password, String display_picture, String email) {
         this.username = username;
         this.password = password;
         this.display_picture = display_picture;
         this.email = email;
+        this.link = new ArrayList<String>();
+        this.pesan = new ArrayList<Message>();
+    }
+
+    public User() {
+        
     }
 
     public String getUsername() {
@@ -53,6 +64,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<Message> getPesan() {
+        return pesan;
+    }
+
+    public void setPesan(ArrayList<Message> pesan) {
+        this.pesan = pesan;
+    }
+
+    public ArrayList<String> getLink() {
+        return link;
+    }
+
+    public void setLink(ArrayList<String> link) {
+        this.link = link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
