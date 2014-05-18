@@ -216,6 +216,36 @@ public class DatabaseInfo extends HttpServlet {
         return tutorialList;
     }
 
+    public ArrayList<Tutorial> getUserTutorial(String uid) {
+        String query = "SELECT * FROM tutorial WHERE USER_ID='" + uid + "'";
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Tutorial b = new Tutorial(
+                        res.getInt("id"),
+                        res.getString("user_id"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("kategori"),
+                        res.getString("featured_image"),
+                        res.getString("status")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+
     public ArrayList<Tutorial> getFeaturedTutorial() {
         String query = "SELECT * FROM tutorial ORDER BY total_like DESC LIMIT 3";
 
@@ -244,6 +274,72 @@ public class DatabaseInfo extends HttpServlet {
             closeConnection();
         }
         return tutorialList;
+    }
+
+    public User getMemberData(String username) {
+        String query = "SELECT * FROM USER WHERE USERNAME = '" + username + "';";
+        User user = new User();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                user = new User(
+                        res.getString("username"),
+                        res.getString("password"),
+                        res.getString("display_picture"),
+                        res.getString("email")
+                );
+                user.setDescription(res.getString("description"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return user;
+    }
+
+    public ArrayList<Message> getMessageList(String query) {
+        ArrayList<Message> mList = new ArrayList<Message>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Message m = new Message(
+                        res.getString("id"),
+                        res.getString("content"),
+                        res.getString("sender_id"),
+                        res.getString("receiver_id"),
+                        res.getTimestamp("date_posted")
+                );
+                mList.add(m);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return mList;
+    }
+
+    public ArrayList<String> linkList(String query) {
+        ArrayList<String> lList = new ArrayList<String>();
+        try {
+            openConnection();
+
+            ResultSet res3 = stmt.executeQuery(query);
+
+            while (res3.next()) {
+                lList.add(res3.getString("url"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return lList;
     }
 
     public ArrayList<User> getFeaturedMember() {
@@ -359,7 +455,7 @@ public class DatabaseInfo extends HttpServlet {
         ArrayList<TutorialStep> tsList = new ArrayList<TutorialStep>();
         String query = "SELECT * FROM TUTORIAL WHERE ID = '" + id + "';";
         String query2 = "SELECT * FROM tutorial_steps WHERE TUTORIAL_ID = '" + id + "';";
-        String query3 = "SELECT * FROM comment WHERE TUTORIAL_ID ='" + id + "';";
+        String query3 = "SELECT * FROM comment WHERE TUTORIAL_ID ='" + id + "' ORDER BY DATE_POSTED desc;";
         ArrayList<Comment> cList = new ArrayList<Comment>();
         String query4 = "SELECT * FROM material WHERE TUTORIAL_ID ='" + id + "';";
         ArrayList<Material> mList = new ArrayList<Material>();
@@ -536,10 +632,10 @@ public class DatabaseInfo extends HttpServlet {
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         //System.out.println(dateFormat.format(cal.getTime()));
-        
+
         // add tutorial
         // create query
-        String query = "INSERT INTO  `madlyincraft`.`tutorial` VALUES (" + tutorialId + ",'" + userId + "','" + title + "','" + description + "'," + 0 + "," + date +",'"+difficulty+"','"+category+"','"+imageLink+"','unapproved')";
+        String query = "INSERT INTO  `madlyincraft`.`tutorial` VALUES (" + tutorialId + ",'" + userId + "','" + title + "','" + description + "'," + 0 + "," + date + ",'" + difficulty + "','" + category + "','" + imageLink + "','unapproved')";
         // add tutorial to db
         try {
             openConnection();
@@ -552,7 +648,7 @@ public class DatabaseInfo extends HttpServlet {
             closeConnection();
         }
         // end of add tutorial
-        
+
         return "true";
 
     }
