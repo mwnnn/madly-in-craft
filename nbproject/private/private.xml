@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/uploadimage.jsp</file>
             <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/DatabaseInfo.java</file>
-            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/UploadServlet2.java</file>
-            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/addTutorial.jsp</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/LoginHandler.java</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/category.jsp</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/header.jsp</file>
             <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/src/java/com/madlyincraft/AddTutorialHandler.java</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/tutorialUser.jsp</file>
+            <file>file:/C:/Users/putih/Documents/NetBeansProjects/madly-in-craft/web/tutorial.jsp</file>
         </group>
     </open-files>
 </project-private>
