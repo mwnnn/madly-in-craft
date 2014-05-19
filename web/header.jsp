@@ -24,6 +24,7 @@
             } else if (usernameObj != null) {
                 logged = true;
                 username = (String) usernameObj;
+                System.out.println("header:" + username);
             }
 
             if (request.getServletPath().equalsIgnoreCase("/register.jsp")) {
