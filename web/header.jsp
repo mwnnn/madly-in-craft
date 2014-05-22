@@ -24,7 +24,6 @@
             } else if (usernameObj != null) {
                 logged = true;
                 username = (String) usernameObj;
-                System.out.println("header:" + username);
             }
 
             if (request.getServletPath().equalsIgnoreCase("/register.jsp")) {
@@ -131,7 +130,7 @@
                                       <a href="profile.jsp">My Profile</a>
                                   </li>
                                   <li>
-                                      <a href="editProfile.jsp">Edit Profile</a>
+                                      <a href="editprofile.jsp">Edit Profile</a>
                                   </li>
                                   <li>
                                       <a href="tutorialUser.jsp">My Tutorial</a>

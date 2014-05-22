@@ -74,7 +74,7 @@
 
         <div class="row">
             <div class="col-md-3 mbottom">
-                <img src="<%=user.getDisplay_picture()%>">
+                <img src="uploads/pp/<%=user.getDisplay_picture()%>">
         </div>
         <div class="col-md-9">
             <div class="row">
@@ -102,7 +102,7 @@
         <% for (Tutorial t : tutList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">
-                <img src="<%=t.getFeatured_image()%>">
+                <img src="uploads/<%=t.getFeatured_image()%>">
             </a>
         </div>
         <%}%>

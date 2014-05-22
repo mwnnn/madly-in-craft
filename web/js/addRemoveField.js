@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 var MaxInputs       = 15; //maximum input boxes allowed for supply
 var MaxInputsStep   = 20; //maximum input boxes alowed for step
-var MaxInputsLink   = 2;
+var MaxInputsLink   = 999;
 var InputsWrapper   = $("#supply"); //Input boxes wrapper ID for supply
 var Step            = $("#step"); // Input boxes wrapper ID for step
 var Link            = $("#link");
@@ -59,9 +59,9 @@ $(AddLink).click(function (e)  //on add input button click
         if(z <= MaxInputsLink) //max input box allowed
         {
             //add input box
-            $(Link).append('<div>' +
+            $(Link).append('<div class="mbottom-10">' +
                                 '<input type="text" class="form-control" placeholder="Label">' +
-                                '<input type="text" class="form-control" placeholder="URL">' +
+                                '<input name="link" type="text" class="form-control" placeholder="URL">' +
                                 '<a href="#" class="btn btn-danger removelink">&times;</a>' +
                            '</div>');
             z++; //text box increment

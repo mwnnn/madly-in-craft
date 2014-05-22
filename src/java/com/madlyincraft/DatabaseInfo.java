@@ -115,6 +115,7 @@ public class DatabaseInfo extends HttpServlet {
             openConnection();
 
             int res = stmt.executeUpdate(query);
+            
            
         } catch (SQLException e) {
 

@@ -8,35 +8,36 @@
 <%@page import="com.madlyincraft.User"%>
 <%@page import="com.madlyincraft.DatabaseInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%!   
-User user = new User();
+<%!
+    User user = new User();
 %>
 <%
     HttpSession sess = request.getSession();
+    // in case cannot online, use: sess.setAttribute("username", "mawan");
     Object usernameObj = sess.getAttribute("username");
     DatabaseInfo db = new DatabaseInfo();
     user = db.getMemberData(usernameObj.toString());
     user.setLink(db.linkList("SELECT * FROM LINK WHERE USER_ID='" + user.getUsername() + "'"));
     ArrayList<String> lList = user.getLink();
-    if(request.getMethod() == "POST"){
-        if(request.getParameter("action").equals("edit")){
-            String query;
-            String query2;
-            String query3;
-            String uname = request.getParameter("username");
-            String description = request.getParameter("about");
-            String pp = request.getParameter("picture");
-            query = "UPDATE USER SET DESCRIPTION='"+description+"' WHERE USERNAME='"+user.getUsername()+"';";
-            query2 = "UPDATE USER SET DISPLAY_PICTURE='"+pp+"' WHERE USERNAME='"+user.getUsername()+"';";
-            query3 = "INSERT INTO LINK VALUES(null, '"+ user.getUsername()+"','"+  request.getParameter("link")+ "')";
-            db.doUpdate(query); 
-            db.doUpdate(query2);
-            db.doUpdate(query3);
-            session.setAttribute("username", uname);
-            //out.println(query);
-            response.sendRedirect("profile.jsp");
-        }
-    }
+//    if (request.getMethod() == "POST") {
+//        if (request.getParameter("action").equals("edit")) {
+//            String query;
+//            String query2;
+//            String query3;
+//            String uname = request.getParameter("username");
+//            String description = request.getParameter("about");
+//            String pp = request.getParameter("picture");
+//            query = "UPDATE user SET description='" + description + "' WHERE USERNAME='" + user.getUsername() + "';";
+//            query2 = "UPDATE user SET DISPLAY_PICTURE='" + pp + "' WHERE USERNAME='" + user.getUsername() + "';";
+//            query3 = "INSERT INTO link VALUES(null, '" + user.getUsername() + "','" + request.getParameter("link") + "')";
+//            db.doUpdate(query);
+//            db.doUpdate(query2);
+//            db.doUpdate(query3);
+//            session.setAttribute("username", uname);
+//            //out.println(query);
+//            response.sendRedirect("profile.jsp");
+//        }
+//    }
 %>
 <!DOCTYPE html>
 <html>
@@ -56,54 +57,51 @@ User user = new User();
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-<jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="header.jsp"></jsp:include>
 
-<h2>Edit Profile</h2>
-<br>
-<form method="POST" class="form-horizontal" role="form">
-    <div class="form-group">
-      <label for="pp" class="col-sm-2 control-label">Profile Picture</label>
-      <div class="col-sm-6">
-          <img src="<%=user.getDisplay_picture()%>">
-      <input type="file" id="profile_picture" name="picture">
-          <button type="submit" class="btn btn-default">Upload</button>
-      </div>
-    </div>
-    <div class="form-group">
-        <label for="username" class="col-sm-2 control-label">Username</label>
-        <div class="col-sm-6">
-            <input type="text" name="username" class="form-control" id="username" value="<%=user.getUsername()%>">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="about" class="col-sm-2 control-label">About</label>
-        <div class="col-sm-6">
-            <textarea name="about" id="about" class="form-control" rows="5"><%=user.getDescription()%></textarea>
-        </div>
-    </div>
-    <div class="form-group form-inline">
-        <label for="website" class="col-sm-2 control-label">Websites</label>
-        <div class="col-sm-6">
-            <%for (String l : lList) {%>
-            <div id="link" class="mbottom-10">
-                <div>
-                    <input type="text" class="form-control" placeholder="Label">
-                    <input type="text" class="form-control" placeholder="<%out.println(l);%>">
-                    <a href="#" class="btn btn-danger removelink">&times;</a>
-                </div>
+        <h2>Edit Profile</h2>
+        <br>
+        <form action="EditProfileHandler" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="pp" class="col-sm-2 control-label">Profile Picture</label>
+                <div class="col-sm-6">
+                    <img src="uploads/pp/<%=user.getDisplay_picture()%>">
+                <input type="file" id="profile_picture" name="picture">
             </div>
-            <%}%>
-            <div id="link" class="mbottom-10">
-                <div>
-                    <input type="text" class="form-control" placeholder="Label">
-                    <input id="link" name="link" type="text" class="form-control" placeholder="URL">
-                    <a href="#" class="btn btn-danger removelink">&times;</a>
-                </div>
-            </div>
-            <a href="#" id="addLink" class="btn btn-info">Add Link</a>
         </div>
-    </div>
-    <button type="submit" name="action" value="edit" class="btn btn-primary" >Save</button>
-</form>
-    
-<jsp:include page="footer.jsp"></jsp:include>
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-6">
+                <input type="text" name="username" class="form-control" id="username" value="<%=user.getUsername()%>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="about" class="col-sm-2 control-label">About</label>
+            <div class="col-sm-6">
+                <textarea name="about" id="about" class="form-control" rows="5"><%=user.getDescription()%></textarea>
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label for="website" class="col-sm-2 control-label">Websites</label>
+            <div class="col-sm-6">
+                <div id="link" >
+                    <%for (String l : lList) {%>
+                    <div class="mbottom-10">
+                        <input type="text" class="form-control" placeholder="Label" name="linkLabel">
+                        <input type="text" class="form-control" value="<%out.println(l);%>" name="link" >
+                        <a href="#" class="btn btn-danger removelink">&times;</a>
+                    </div>
+                    <%}%>
+                    <div class="mbottom-10">
+                        <input type="text" class="form-control" placeholder="Label" name="linkLabel">
+                        <input name="link" class="form-control" placeholder="URL" type="text" >
+                        <a href="#" class="btn btn-danger removelink" >&times;</a>
+                    </div>
+                </div>
+                <a href="#" id="addLink" class="btn btn-info">Add Link</a>
+            </div>
+        </div>
+        <button type="submit" name="action" value="edit" class="btn btn-primary" >Save</button>
+    </form>
+
+    <jsp:include page="footer.jsp"></jsp:include>

@@ -54,7 +54,6 @@ public class AddTutorialHandler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //response.sendRedirect("profile.jsp");
         try (PrintWriter out = response.getWriter()) {
             // get session
             HttpSession sess = request.getSession();
@@ -81,21 +80,23 @@ public class AddTutorialHandler extends HttpServlet {
             int ii = 0;
             //Get all the parts from request and write it to the file on server
             for (Part part : request.getParts()) {
-                if (part.getName().equalsIgnoreCase("imageLink")) {
-                    // first upload is featured images
-                    fileName = getFileName(part);
-                    part.write(uploadFilePath + File.separator + fileName);
-                    // save fileName as imageLink
-                    imageLink = fileName;
-                    //out.println(fileName + " File uploaded successfully!");
-                } else if (part.getName().equalsIgnoreCase("tutStepImage")){
-                    // next upload is instruction image
-                    fileName = getFileName(part);
-                    part.write(uploadFilePath + File.separator + fileName);
-                    // add instruction image file name to tutStepImages
-                    tutStepImages.add(fileName);
-                    //out.println(fileName + " File uploaded successfully!");
-                    
+                // check if user really uploads new pp
+                if (!getFileName(part).equalsIgnoreCase("")) {
+                    if (part.getName().equalsIgnoreCase("imageLink")) {
+                        // first upload is featured images
+                        fileName = getFileName(part);
+                        part.write(uploadFilePath + File.separator + fileName);
+                        // save fileName as imageLink
+                        imageLink = fileName;
+                        //out.println(fileName + " File uploaded successfully!");
+                    } else if (part.getName().equalsIgnoreCase("tutStepImage")) {
+                        // next upload is instruction image
+                        fileName = getFileName(part);
+                        part.write(uploadFilePath + File.separator + fileName);
+                        // add instruction image file name to tutStepImages
+                        tutStepImages.add(fileName);
+                        //out.println(fileName + " File uploaded successfully!");
+                    }
                 }
             }
             // end of upload part
@@ -104,7 +105,7 @@ public class AddTutorialHandler extends HttpServlet {
             category = request.getParameter("category");
             description = request.getParameter("description");
             difficulty = request.getParameter("difficulty");
-            
+
             // add "supply" to supplies
             supplies.addAll(Arrays.asList(request.getParameterValues("supply")));
             // add "tutStep" to tutSteps
@@ -118,22 +119,24 @@ public class AddTutorialHandler extends HttpServlet {
                 materialList.add(m);
             }
             // done making materialList
-            
+
             // create ArrayList<TutorialStep> object and add tutSteps into it
             ArrayList<TutorialStep> tutStepList = new ArrayList<TutorialStep>();
-            for (int i = 0; i < tutSteps.size(); i++) {
-                int num = i + 1;
-                TutorialStep t = new TutorialStep(num, tutSteps.get(i), tutStepImages.get(i));
-                tutStepList.add(t);
+            if (tutSteps.size() > 0 && tutStepImages.size() > 0) {
+                for (int i = 0; i < tutSteps.size(); i++) {
+                    int num = i + 1;
+                    TutorialStep t = new TutorialStep(num, tutSteps.get(i), tutStepImages.get(i));
+                    tutStepList.add(t);
+                }
             }
             // done making tutStepList
-            
+
             // try add tutorial
             int add = tryAddTutorial(username, title, category, imageLink, description, difficulty, materialList, tutStepList);
 
             if (add > 0) {
-            //return;
-            response.sendRedirect("tutorialUser.jsp");
+                //return;
+                response.sendRedirect("tutorialUser.jsp");
             } else {
                 out.println("gagal bikin tutorial");
             }
