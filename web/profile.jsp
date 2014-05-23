@@ -177,7 +177,7 @@
                     <%
                         User u = db.getMemberData(m.getSender());
                     %>
-                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="uploads/pp/<%=user.getDisplay_picture()%>" width="50" height="50"></a>
+                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="uploads/pp/<%=u.getDisplay_picture()%>" width="50" height="50"></a>
                 </div>
                 <div class="col-md-10">
                     <table frame="box" width="535" height="70" class="usrcomment">
