@@ -151,7 +151,7 @@
                 <tr><td>
                         <div class="row comment2">
                             <div class="col-md-1 commentpad">AS:</div>
-                            <div class="col-md-1"><a href="profile.jsp"><img src="<%=db.getMemberData(usernameObj.toString()).getDisplay_picture()%>" width="50" height="50"></a></div>
+                            <div class="col-md-1"><a href="profile.jsp"><img src="uploads/pp/<%=db.getMemberData(usernameObj.toString()).getDisplay_picture()%>" width="50" height="50"></a></div>
                             <div class="col-md-7">
                                 <div class="col-md-3 commentpad commentname"><%=usernameObj%></div>
                             </div>
@@ -177,7 +177,7 @@
                     <%
                         User u = db.getMemberData(m.getSender());
                     %>
-                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="<%=u.getDisplay_picture()%>" width="50" height="50"></a>
+                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="uploads/pp/<%=user.getDisplay_picture()%>" width="50" height="50"></a>
                 </div>
                 <div class="col-md-10">
                     <table frame="box" width="535" height="70" class="usrcomment">
