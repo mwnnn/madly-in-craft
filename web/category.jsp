@@ -47,9 +47,9 @@
             if (tList.size() == 0) {
                 out.println("No Tutorial in This Category");
             } else {
-                for (Tutorial t : tList) {
+                for (int i = 0; i < 8; i++) {
+                    Tutorial t = tList.get(i);
                     url = "tutorial.jsp?id=" + t.getId();
-
         %>
         <div class="col-xs-6 col-md-3">
             <a href="<%= url%>" class="thumbnail">
@@ -60,101 +60,45 @@
         <%}
             }%>
     </div><!-- latest tutorial thumbnails -->
-    <!--<div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-      <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-    <div class="col-xs-6 col-md-3">
-      <a href="tutorial.jsp" class="thumbnail">
-        <img src="http://placehold.it/250x250">
-      </a>
-    </div>
-</div><!-- latest tutorial thumbnails -->
-<%// pagination
-// 1 page 4x4 box, 1-16
-// next page (pg 2)should be 17 till 17+16-1 = 32
-// (2-116*%>
+
+    <%// pagination
+        // 1 page 4x4 box, 1-16
+        // next page (pg 2)should be 17 till 17+16-1 = 32
+        // 16*(2-1)+1 til 16*2*%>
     <div class="row">
         <div class="col-md-12">
             <ul class="pagination">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
+                <% 
+                    // mencari nilai pagination awal yeeeeey
+                    String startPage = "";
+                    if (request.getParameter("p") == null || request.getParameter("page").equals("1")) {
+                        startPage = null;
+                    } else {
+                        startPage = "1";
+                    }
+                    if (startPage != null) {
+                %>
+                <li><a href="<%= request.getRequestURL()%>?kategori=<%= kategori%>&p=1">&laquo;</a></li>
+                    <% }%>
+                    <% // this should be looping...
+                        // count the tutorials
+                        double count = db.countAllTutorial();
+                        int pageMax = (int) Math.ceil(count / 8.0);
+                        for (int i = 1; i <= pageMax; i++) {
+                    %>
+                <li><a href="<%= request.getRequestURL()%>?kategori=<%= kategori%>&page=<%=i%>"><%=i%></a></li>
+                    <%}
+                        // mencari nilai pagination akhir yeeeeey
+                        String lastPage = "";
+                        if (request.getParameter("page") == null || request.getParameter("page").equals("" + pageMax)) {
+                            lastPage = null;
+                        } else {
+                            lastPage = "" + pageMax;
+                        }
+                        if (lastPage != null) {
+                    %>
+                <li><a href="<%= request.getRequestURL()%>?kategori=<%= kategori%>&page=<%=pageMax%>">&raquo;</a></li>
+                    <% }%>
             </ul>
         </div>
     </div> 

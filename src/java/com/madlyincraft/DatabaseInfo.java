@@ -233,6 +233,23 @@ public class DatabaseInfo extends HttpServlet {
         return tutorialList;
     }
     
+    public int countAllTutorial() {
+        String query = "SELECT count(*) as count FROM tutorial WHERE STATUS='approved'";
+        int count = 0;
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                count = res.getInt("count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return count;
+    }
+    
     public ArrayList<Tutorial> getUnapprovedTutorial() {
         String query = "SELECT * FROM tutorial WHERE STATUS='unapproved'";
 
