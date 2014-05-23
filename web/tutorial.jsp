@@ -48,9 +48,17 @@
                     + " WHERE id='" + request.getParameter("id") + "'";
             db.doUpdate(query);
             response.sendRedirect("tutorial.jsp?id=" + request.getParameter("id"));
+            return;
         }
     }
     if (request.getMethod() == "GET") {
+        if (request.getParameter("apv") != null) {
+            // do approve tutorial
+            String approveQuery = "UPDATE tutorial SET STATUS = 'approved' WHERE  `tutorial`.`ID` = " + request.getParameter("apv");
+            db.doUpdate(approveQuery);
+            response.sendRedirect("tutorial.jsp?id=" + request.getParameter("apv"));
+            return;
+        }
         t = db.getTutorialByID(request.getParameter("id"));
     }
 %>
@@ -189,7 +197,20 @@
         </div>
         <%}%>
     </div><!-- foto kreasi thumbnail -->
+    <% // approval button
+        // check if he is admin
+        if (sess.getAttribute("admin").toString().equalsIgnoreCase("admin")) {
+            // check if it is unapproved
+            if (!t.getStatus().equalsIgnoreCase("approved")) {
 
+    %>
+    <div class="row">
+        <div class="col-md-offset-9">
+            <a href="<%= request.getRequestURL()%>?apv=<%=request.getParameter("id")%>" class="btn btn-info">Approve</a>
+        </div>
+    </div>
+    <%}
+        }%>
     <div class="row">
         <h2 class="heading">Comments</h2>
 
@@ -232,8 +253,7 @@
 
     <%
         ArrayList<Comment> cList = t.getKomentar();
-    %>
-    <% for (Comment c : cList) {%>
+        for (Comment c : cList) {%>
     <div class="row">
         <div class="col-md-7">
             <p class="borderline"></p>
@@ -273,8 +293,8 @@
             </div>
         </div>
         <%
-        //ini bagian kalo komennya reply dari komen lain
-        if (c.getChilds() != null) {
+            //ini bagian kalo komennya reply dari komen lain
+            if (c.getChilds() != null) {
                 for (Comment cs : c.getChilds()) {
         %>
         <div class="row" style="margin-left:90px">

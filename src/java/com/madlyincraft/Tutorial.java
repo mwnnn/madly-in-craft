@@ -44,7 +44,7 @@ public class Tutorial {
         this.status = status;
     }
 
-     public Tutorial(int Id, String date_posted, String difficulty, String title, String content, int total_like, String urlImage) {
+     public Tutorial(int Id, String date_posted, String difficulty, String title, String content, int total_like, String urlImage, String status) {
         this.id = Id;
         this.date_posted = date_posted;
         this.difficulty = difficulty;
@@ -52,6 +52,7 @@ public class Tutorial {
         this.content = content;
         this.total_like = total_like;
         this.featured_image = urlImage;
+        this.status = status;
     }
 
     public Tutorial(String Id, String date_posted, String difficulty, String title, String content, int total_like, String urlImage, ArrayList<TutorialStep> steps, ArrayList<Material> materials, ArrayList<Comment> comments){

@@ -85,8 +85,8 @@
 
         <%
             // featured creation list
-            ArrayList<Tutorial> creationList = new ArrayList<Tutorial>();
-            creationList = db.getFeaturedTutorial();
+            ArrayList<Fotokreasi> creationList = new ArrayList<Fotokreasi>();
+            creationList = db.getFeaturedFotokreasi();
         %>                    
         <div class="col-md-5">
             <h2 class="heading carousel-title">Featured Creation</h2>

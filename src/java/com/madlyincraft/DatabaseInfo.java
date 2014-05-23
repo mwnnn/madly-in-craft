@@ -457,7 +457,8 @@ public class DatabaseInfo extends HttpServlet {
                         res.getString("title"),
                         res.getString("content"),
                         res.getInt("total_like"),
-                        res.getString("featured_image")
+                        res.getString("featured_image"),
+                        res.getString("status")
                 );
                 tutorialList.add(b);
             }
@@ -484,7 +485,8 @@ public class DatabaseInfo extends HttpServlet {
                         res.getString("title"),
                         res.getString("content"),
                         res.getInt("total_like"),
-                        res.getString("featured_image")
+                        res.getString("featured_image"),
+                        res.getString("status")
                 );
                 tutorialList.add(b);
             }
@@ -518,7 +520,8 @@ public class DatabaseInfo extends HttpServlet {
                         res.getString("title"),
                         res.getString("content"),
                         res.getInt("total_like"),
-                        res.getString("featured_image")
+                        res.getString("featured_image"),
+                        res.getString("status")
                 );
             }
             ResultSet res2 = stmt.executeQuery(query2);
