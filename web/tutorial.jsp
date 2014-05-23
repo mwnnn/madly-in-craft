@@ -184,7 +184,8 @@
                     </td></tr>
             </table>
         </div>
-    </div> <!-- comment form -->
+    </div> 
+    <!-- comment form -->
     <div class="row">
 
         <div class="col-md-7">

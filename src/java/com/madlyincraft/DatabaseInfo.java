@@ -82,6 +82,25 @@ public class DatabaseInfo extends HttpServlet {
         }
         return authenticated;
     }
+    
+    public boolean loginAdmin(String username, String password) {
+        boolean authenticated = false;
+        String queryAdmin = "SELECT COUNT(*) FROM admin WHERE username='" + username + "' AND password='" + password + "'";
+
+        try {
+            openConnection();
+
+            ResultSet res = stmt.executeQuery(queryAdmin);
+            while (res.next()) {
+                authenticated = res.getInt(1) == 1;
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            closeConnection();
+        }
+        return authenticated;
+    }
 
     public boolean isUserExist(String username) {
         boolean exist = false;

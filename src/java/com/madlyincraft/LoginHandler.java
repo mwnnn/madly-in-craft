@@ -45,16 +45,26 @@ public class LoginHandler extends HttpServlet {
                 response.sendRedirect("error.jsp?code=2&back=index");
                 return;
             }
-            
+
             try {
-                if(tryLogin(username, password)) {
+                // tryLogin
+                String tryLoginString = tryLogin(username, password);
+                if (tryLoginString.equalsIgnoreCase("adm")) {
+                    // logged as admin
                     HttpSession sess = request.getSession();
                     sess.setAttribute("username", username);
-                    
+                    // set admin attribute, so admin can open admin page
+                    sess.setAttribute("admin", "admin");
+
                     response.sendRedirect("index.jsp");
                     return;
-                } else {
-                    response.sendRedirect("error.jsp?code=3&back=index");
+                } else if (tryLoginString.equalsIgnoreCase("usr")) {
+                    // logged as normal user
+                    HttpSession sess = request.getSession();
+                    sess.setAttribute("username", username);
+                    sess.setAttribute("admin", null);
+
+                    response.sendRedirect("index.jsp");
                     return;
                 }
             } catch (Exception e) {
@@ -64,9 +74,15 @@ public class LoginHandler extends HttpServlet {
         }
     }
 
-    private boolean tryLogin(String username, String password) {
+    private String tryLogin(String username, String password) {
         DatabaseInfo db = new DatabaseInfo();
-        return db.login(username, password);
+        if (db.loginAdmin(username, password)) {
+            return "adm";
+        } else if (db.login(username, password)) {
+            return "usr";
+        } else {
+            return "fail";
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
