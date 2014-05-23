@@ -124,7 +124,7 @@
                                 <li class="divider"></li>
                             </ul>
                             <% } else { %>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=sess.getAttribute("username")%><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                   <li>
                                       <a href="profile.jsp">My Profile</a>
