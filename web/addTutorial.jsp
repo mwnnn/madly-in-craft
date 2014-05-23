@@ -93,7 +93,7 @@
                 <label for="featuredImg" class="col-sm-2 control-label">Featured Image</label>
                 <div class="col-sm-6">
                     <p>Upload the result image of your craft</p>
-                    <input type="file" id="featured_img" name="imageLink">
+                    <input type="file" id="featured_img" name="imageLink" accept="image/*">
                 </div>
             </div>
             <!--end of featured image-->

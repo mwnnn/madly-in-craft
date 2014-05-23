@@ -37,122 +37,126 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-<jsp:include page="header.jsp"></jsp:include>
-    
-<h2><%=kategori%></h2>
-<br>
+    <jsp:include page="header.jsp"></jsp:include>
 
-<div class="row">
-    <%
-        if (tList.size() == 0) {
-            out.println("No Tutorial in This Category");
-        } else {
-            for (Tutorial t : tList) {
-                url = "tutorial.jsp?id=" + t.getId();
+        <h2><%=kategori%></h2>
+    <br>
 
-    %>
-    <div class="col-xs-6 col-md-3">
-        <a href="<%= url%>" class="thumbnail">
-            <img src="uploads/<%= t.getFeatured_image()%>">
-            <h4><%=t.getTitle()%></h4>
-        </a>
+    <div class="row">
+        <%
+            if (tList.size() == 0) {
+                out.println("No Tutorial in This Category");
+            } else {
+                for (Tutorial t : tList) {
+                    url = "tutorial.jsp?id=" + t.getId();
+
+        %>
+        <div class="col-xs-6 col-md-3">
+            <a href="<%= url%>" class="thumbnail">
+                <img src="uploads/<%= t.getFeatured_image()%>">
+                <h4><%=t.getTitle()%></h4>
+            </a>
+        </div>
+        <%}
+            }%>
+    </div><!-- latest tutorial thumbnails -->
+    <!--<div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
     </div>
-    <%}
-        }%>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+      <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+      <a href="tutorial.jsp" class="thumbnail">
+        <img src="http://placehold.it/250x250">
+      </a>
+    </div>
 </div><!-- latest tutorial thumbnails -->
-                  <!--<div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                    <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-              </div><!-- latest tutorial thumbnails -->
-              <div class="row">
-                  <div class="col-md-12">
-                    <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li><a href="#">&raquo;</a></li>
-                    </ul>
-                  </div>
-              </div> 
+<%// pagination
+// 1 page 4x4 box, 1-16
+// next page (pg 2)should be 17 till 17+16-1 = 32
+// (2-116*%>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div> 
 
-<jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>

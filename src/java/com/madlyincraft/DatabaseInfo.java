@@ -204,7 +204,37 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<Tutorial> getAllTutorial() {
-        String query = "SELECT * FROM tutorial";
+        String query = "SELECT * FROM tutorial WHERE STATUS='approved'";
+
+        ArrayList<Tutorial> tutorialList = new ArrayList<>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Tutorial b = new Tutorial(
+                        res.getInt("id"),
+                        res.getString("user_id"),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getInt("total_like"),
+                        res.getString("date_posted"),
+                        res.getString("difficulty"),
+                        res.getString("kategori"),
+                        res.getString("featured_image"),
+                        res.getString("status")
+                );
+                tutorialList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return tutorialList;
+    }
+    
+    public ArrayList<Tutorial> getUnapprovedTutorial() {
+        String query = "SELECT * FROM tutorial WHERE STATUS='unapproved'";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<>();
         try {
@@ -264,7 +294,7 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<Tutorial> getFeaturedTutorial() {
-        String query = "SELECT * FROM tutorial ORDER BY total_like DESC LIMIT 3";
+        String query = "SELECT * FROM tutorial  WHERE STATUS='approved' ORDER BY total_like DESC LIMIT 3";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
         try {
@@ -383,7 +413,7 @@ public class DatabaseInfo extends HttpServlet {
     }
 
     public ArrayList<Tutorial> getLatestTutorial() {
-        String query = "SELECT * FROM tutorial ORDER BY DATE_POSTED DESC LIMIT 0 , 8";
+        String query = "SELECT * FROM tutorial  WHERE STATUS='approved' ORDER BY DATE_POSTED DESC LIMIT 0 , 8";
 
         ArrayList<Tutorial> tutorialList = new ArrayList<Tutorial>();
         try {

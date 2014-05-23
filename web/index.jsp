@@ -37,6 +37,7 @@
         tutList = db.getFeaturedTutorial();
     %>
     <div class="row mtop-50">
+        <%//featured tutorial%>
         <div class="col-md-7">
             <h2 class="heading carousel-title">Featured Tutorial</h2>
             <div id="slider" class="carousel slide">
@@ -83,6 +84,7 @@
         </div><!--featured tutorial -->
 
         <%
+            // featured creation list
             ArrayList<Tutorial> creationList = new ArrayList<Tutorial>();
             creationList = db.getFeaturedTutorial();
         %>                    
@@ -119,19 +121,20 @@
             </div><!-- featured creation -->
 
             <%
+            // featured user
                 ArrayList<User> featuredMemberList = new ArrayList<User>();
                 featuredMemberList = db.getFeaturedMember();
             %>                        
             <div>
                 <p class="heading carousel-title">Featured Member</p>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(0).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp"><img class="img-responsive" src="uploads/<%=featuredMemberList.get(0).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(1).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp"><img class="img-responsive" src="uploads/<%=featuredMemberList.get(1).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(2).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp"><img class="img-responsive" src="uploads/<%=featuredMemberList.get(2).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
             </div><!-- featured member -->
         </div>

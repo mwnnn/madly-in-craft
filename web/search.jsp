@@ -51,7 +51,7 @@
         %>
         <div class="col-xs-6 col-md-3">
             <a href="<%= url %>" class="thumbnail">
-                <img src="<%= t.getFeatured_image()%>">
+                <img src="uploads/<%= t.getFeatured_image()%>">
             </a>
             <h4><%=t.getTitle()%></h4>
         </div>

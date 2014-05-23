@@ -66,7 +66,7 @@
                 <label for="pp" class="col-sm-2 control-label">Profile Picture</label>
                 <div class="col-sm-6">
                     <img src="uploads/pp/<%=user.getDisplay_picture()%>">
-                <input type="file" id="profile_picture" name="picture">
+                <input type="file" id="profile_picture" name="picture" accept="image/*">
             </div>
         </div>
         <div class="form-group">
