@@ -83,31 +83,35 @@
         </div><!--featured tutorial -->
 
         <%
-            ArrayList<Tutorial> creationList = new ArrayList<Tutorial>();
-            creationList = db.getFeaturedTutorial();
+            ArrayList<Fotokreasi> creationList = new ArrayList<Fotokreasi>();
+            creationList = db.getFeaturedFotokreasi();
         %>                    
         <div class="col-md-5">
             <h2 class="heading carousel-title">Featured Creation</h2>
             <div id="slider2" class="carousel slide creation">
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img class="img-responsive" src="uploads/<%=creationList.get(0).getFeatured_image()%>" width="450"><!-- 450x215 -->
+                        <a href="creation.jsp?id=<%=creationList.get(0).getId()%>">
+                            <img class="img-responsive" src="uploads/<%=creationList.get(0).getUrl()%>" width="450"><!-- 450x215 -->
+                        </a>
                         <div class="carousel-caption">
                             <h4><%=creationList.get(0).getTitle()%></h4>
                         </div>
                     </div>
 
                     <div class="item">
-                        <img class="img-responsive" src="uploads/<%=creationList.get(1).getFeatured_image()%>" width="450">
-
+                        <a href="creation.jsp?id=<%=creationList.get(1).getId()%>">
+                            <img class="img-responsive" src="uploads/<%=creationList.get(1).getUrl()%>" width="450">
+                        </a>
                         <div class="carousel-caption">
                             <h4><%=creationList.get(1).getTitle()%></h4>
                         </div>
                     </div>
 
                     <div class="item">
-                        <img class="img-responsive" src="uploads/<%=creationList.get(2).getFeatured_image()%>" width="450">
-
+                        <a href="creation.jsp?id=<%=creationList.get(2).getId()%>">
+                            <img class="img-responsive" src="uploads/<%=creationList.get(2).getUrl()%>" width="450">
+                        </a>
                         <div class="carousel-caption">
                             <h4><%=creationList.get(2).getTitle()%></h4>
                         </div>
@@ -117,7 +121,6 @@
                 <a class="left carousel-control" href="#slider2" data-slide="prev">&lsaquo;</a>
                 <a class="right carousel-control" href="#slider2" data-slide="next">&rsaquo;</a>
             </div><!-- featured creation -->
-
             <%
                 ArrayList<User> featuredMemberList = new ArrayList<User>();
                 featuredMemberList = db.getFeaturedMember();
@@ -125,13 +128,13 @@
             <div>
                 <p class="heading carousel-title">Featured Member</p>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(0).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp?id=<%=featuredMemberList.get(0).getUsername()%>"><img class="img-responsive" src="uploads/pp/<%=featuredMemberList.get(0).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(1).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp?id=<%=featuredMemberList.get(1).getUsername()%>"><img class="img-responsive" src="uploads/pp/<%=featuredMemberList.get(1).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
                 <div class="col-md-4">
-                    <a href="profile.jsp"><img class="img-responsive" src="<%=featuredMemberList.get(2).getDisplay_picture()%>" width="118" height="118"></a>
+                    <a href="profile.jsp?id=<%=featuredMemberList.get(2).getUsername()%>"><img class="img-responsive" src="uploads/pp/<%=featuredMemberList.get(2).getDisplay_picture()%>" width="118" height="118"></a>
                 </div>
             </div><!-- featured member -->
         </div>
@@ -144,54 +147,12 @@
             for (Tutorial t : latestList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">
-                <img class="img-responsive" src="uploads/<%= t.getFeatured_image()%>">
+                <img class="img-responsive" src="uploads/<%= t.getFeatured_image()%>" width="250" height="250">
             </a>
         </div>
         <%}%>
     </div><!-- latest tutorial thumbnails -->
-    <!--<div class="row">
-        <h2 class="heading">Latest Tutorial</h2>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="tutorial.jsp" class="thumbnail">
-            <img class="img-responsive" src="http://placehold.it/250x250">
-          </a>
-        </div>
-    </div><!-- latest tutorial thumbnails -->
+
     <div class="row">
         <div class="col-md-12">
             <ul class="pagination">
