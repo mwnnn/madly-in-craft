@@ -17,6 +17,10 @@
         <servlet-class>com.madlyincraft.AddTutorialHandler</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddKreasiHandler</servlet-name>
+        <servlet-class>com.madlyincraft.AddKreasiHandler</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UploadServlet2</servlet-name>
         <servlet-class>com.madlyincraft.UploadServlet2</servlet-class>
     </servlet>

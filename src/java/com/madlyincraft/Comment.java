@@ -7,6 +7,7 @@ package com.madlyincraft;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Comment {
     private String content;
     private Timestamp timestamp;
     private String uname;
+    private ArrayList<Comment> childs;
 
     public Comment(String id, String content, Timestamp timestamp, String username) {
         this.id = id;
@@ -26,6 +28,13 @@ public class Comment {
         this.uname = username;
     }
 
+    public Comment(String id, String content, Timestamp timestamp, String username, String parent) {
+        this.id = id;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.uname = username;
+    }
+   
     public String getId() {
         return id;
     }
@@ -57,7 +66,14 @@ public class Comment {
     public void setUname(String uname) {
         this.uname = uname;
     }
-    
-    
 
+    public ArrayList<Comment> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(ArrayList<Comment> childs) {
+        this.childs = childs;
+    }
+
+    
 }

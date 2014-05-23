@@ -4,7 +4,29 @@
     Author     : acer
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.madlyincraft.DatabaseInfo"%>
+<%@page import="com.madlyincraft.User"%>
+<%@page import="com.madlyincraft.Tutorial"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%! Tutorial t = new Tutorial();
+    User user = new User();
+%>
+<%
+    HttpSession sess = request.getSession();
+    Object usernameObj = sess.getAttribute("username");
+    DatabaseInfo db = new DatabaseInfo();
+    if (usernameObj != null) {
+        user = db.getMemberData(usernameObj.toString());
+    }
+    ArrayList<Tutorial> tutList = new ArrayList<Tutorial>();
+    
+    if (request.getMethod() == "GET") {
+        if (request.getParameter("uid") != null) {
+            tutList = db.getUserTutorial(request.getParameter("uid"));
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,62 +43,29 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-<jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="header.jsp"></jsp:include>
 
-             <div class="row">
-                  <h2 class="heading">User Tutorial</h2><br>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-                  <div class="col-xs-6 col-md-3">
-                    <a href="tutorial.jsp" class="thumbnail">
-                      <img src="http://placehold.it/250x250">
-                    </a>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12">
-                    <ul class="pagination">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li><a href="#">&raquo;</a></li>
-                    </ul>
-                  </div>
-              </div> 
-<jsp:include page="footer.jsp"></jsp:include>
+        <div class="row">
+            <h2 class="heading">User Tutorial</h2><br>
+        <% for (Tutorial t : tutList) {%>
+        <div class="col-xs-6 col-md-3">
+            <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">
+                <img src="<%=t.getFeatured_image()%>">
+            </a>
+        </div>
+        <%}%>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div> 
+    <jsp:include page="footer.jsp"></jsp:include>

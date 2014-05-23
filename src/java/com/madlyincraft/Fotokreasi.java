@@ -18,7 +18,12 @@ public class Fotokreasi {
     private String url;
     private int total_vote_up;
     private int total_vote_down;
-
+    private String title;
+    private String description;
+    
+    public Fotokreasi() {
+    }
+    
     public Fotokreasi(int id, int tutorial_id, String user_id, String date_posted, String url, int total_vote_up, int total_vote_down) {
         this.id = id;
         this.tutorial_id = tutorial_id;
@@ -29,6 +34,18 @@ public class Fotokreasi {
         this.total_vote_down = total_vote_down;
     }
 
+    public Fotokreasi(int id, int tutorial_id, String user_id, String date_posted, String url, int total_vote_up, int total_vote_down, String title, String description) {
+        this.id = id;
+        this.tutorial_id = tutorial_id;
+        this.user_id = user_id;
+        this.date_posted = date_posted;
+        this.url = url;
+        this.total_vote_up = total_vote_up;
+        this.total_vote_down = total_vote_down;
+        this.title = title;
+        this.description = description;
+    }
+    
     public int getId() {
         return id;
     }
@@ -83,6 +100,22 @@ public class Fotokreasi {
 
     public void setTotal_vote_down(int total_vote_down) {
         this.total_vote_down = total_vote_down;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     

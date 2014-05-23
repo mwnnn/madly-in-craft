@@ -115,8 +115,7 @@ public class DatabaseInfo extends HttpServlet {
             openConnection();
 
             int res = stmt.executeUpdate(query);
-            
-           
+
         } catch (SQLException e) {
 
         } finally {
@@ -561,6 +560,121 @@ public class DatabaseInfo extends HttpServlet {
         return fotokreasiList;
     }
 
+    public ArrayList<Fotokreasi> getFeaturedFotokreasi() {
+        String query = "SELECT * FROM foto_kreasi ORDER BY total_voteup DESC LIMIT 3";
+
+        ArrayList<Fotokreasi> fotokreasiList = new ArrayList<Fotokreasi>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Fotokreasi b = new Fotokreasi(
+                        res.getInt("id"),
+                        res.getInt("tutorial_id"),
+                        res.getString("user_id"),
+                        res.getString("date_posted"),
+                        res.getString("url"),
+                        res.getInt("total_voteup"),
+                        res.getInt("total_votedown"),
+                        res.getString("title"),
+                        res.getString("description")
+                );
+                fotokreasiList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return fotokreasiList;
+    }
+
+    public ArrayList<Fotokreasi> getUserkreasi(String username) {
+        String query = "SELECT * FROM foto_kreasi WHERE user_id='" + username + "'";
+
+        ArrayList<Fotokreasi> fotokreasiList = new ArrayList<Fotokreasi>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Fotokreasi b = new Fotokreasi(
+                        res.getInt("id"),
+                        res.getInt("tutorial_id"),
+                        res.getString("user_id"),
+                        res.getString("date_posted"),
+                        res.getString("url"),
+                        res.getInt("total_voteup"),
+                        res.getInt("total_votedown"),
+                        res.getString("title"),
+                        res.getString("description")
+                );
+                fotokreasiList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return fotokreasiList;
+    }
+
+    public ArrayList<Fotokreasi> getTutorialkreasi(String tutID) {
+        String query = "SELECT * FROM foto_kreasi WHERE tutorial_id='" + tutID + "'";
+
+        ArrayList<Fotokreasi> fotokreasiList = new ArrayList<Fotokreasi>();
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Fotokreasi b = new Fotokreasi(
+                        res.getInt("id"),
+                        res.getInt("tutorial_id"),
+                        res.getString("user_id"),
+                        res.getString("date_posted"),
+                        res.getString("url"),
+                        res.getInt("total_voteup"),
+                        res.getInt("total_votedown"),
+                        res.getString("title"),
+                        res.getString("description")
+                );
+                fotokreasiList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return fotokreasiList;
+    }
+
+    public Fotokreasi getKreasiById(String id) {
+        Fotokreasi b = new Fotokreasi();
+        String query = "SELECT * FROM foto_kreasi WHERE ID='" + id + "'";
+        try {
+            openConnection();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                b = new Fotokreasi(
+                        res.getInt("id"),
+                        res.getInt("tutorial_id"),
+                        res.getString("user_id"),
+                        res.getString("date_posted"),
+                        res.getString("url"),
+                        res.getInt("total_voteup"),
+                        res.getInt("total_votedown"),
+                        res.getString("title"),
+                        res.getString("description")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return b;
+    }
+
+
     public int addTutorial(String userId, String title, String category, String imageLink, String description, String difficulty, ArrayList<Material> material, ArrayList<TutorialStep> tutStep) {
         // get latest tutorial id
         String tutorialIdQuery = "SELECT `ID` FROM `madlyincraft`.`tutorial` ORDER BY `tutorial`.`ID`  DESC LIMIT 0,1";
@@ -569,7 +683,7 @@ public class DatabaseInfo extends HttpServlet {
             openConnection();
             ResultSet res = stmt.executeQuery(tutorialIdQuery);
             if (res.next()) {
-            tutorialId = res.getInt("ID") + 1;
+                tutorialId = res.getInt("ID") + 1;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -653,6 +767,22 @@ public class DatabaseInfo extends HttpServlet {
 
         return resInt;
 
+    }
+
+    public int addFotokreasi(String id, int tutorial_id, String user_id, String date_posted, String url, int total_vote_up, int total_vote_down, String title, String description) {
+        int res = 0;
+        String query = "INSERT INTO foto_kreasi VALUES(" + id + "," + tutorial_id + ",'"+ user_id + "','" + date_posted + "','" + url + "'," + total_vote_up + "," + total_vote_down + ",'" + title + "','" + description + "')";
+        try {
+            openConnection();
+            res = stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseInfo.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ambil latest tuto id gagal");
+            //return "";
+        } finally {
+            closeConnection();
+        }
+        return res;
     }
 
     public int doUpdate(String query) {
