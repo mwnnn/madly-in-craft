@@ -56,7 +56,13 @@
             // do approve tutorial
             String approveQuery = "UPDATE tutorial SET STATUS = 'approved' WHERE  `tutorial`.`ID` = " + request.getParameter("apv");
             db.doUpdate(approveQuery);
-            response.sendRedirect("tutorial.jsp?id=" + request.getParameter("apv"));
+            response.sendRedirect("adminPage.jsp");
+            return;
+        } else if (request.getParameter("del") != null) {
+            // do approve tutorial
+            String delQuery = "DELETE FROM tutorial WHERE  `tutorial`.`ID` = " + request.getParameter("del");
+            db.doUpdate(delQuery);
+            response.sendRedirect("adminPage.jsp");
             return;
         }
         t = db.getTutorialByID(request.getParameter("id"));
@@ -129,14 +135,14 @@
                     <br /><br />
                     <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
                     <script>!function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (!d.getElementById(id)) {
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }
-    }(document, "script", "twitter-wjs");</script>
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "https://platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, "script", "twitter-wjs");</script>
                 </div>
                 <div class="col-md-5">
                     <form method="POST">
@@ -216,6 +222,11 @@
     <div class="row">
         <div class="col-md-offset-9">
             <a href="<%= request.getRequestURL()%>?apv=<%=request.getParameter("id")%>" class="btn btn-info">Approve</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-9">
+            <a href="<%= request.getRequestURL()%>?del=<%=request.getParameter("id")%>" class="btn btn-info">Delete</a>
         </div>
     </div>
     <%}
