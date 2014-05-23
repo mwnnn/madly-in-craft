@@ -4,6 +4,7 @@
     Author     : acer
 --%>
 
+<%@page import="com.madlyincraft.Tutorial"%>
 <%@page import="com.madlyincraft.Fotokreasi"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.madlyincraft.DatabaseInfo"%>
@@ -15,21 +16,15 @@
     int end = 0;
     int numb = 0;
     DatabaseInfo db = new DatabaseInfo();
-    ArrayList<Fotokreasi> kList = new ArrayList<Fotokreasi>();
-    kList = db.getAllFotokreasi();
+    ArrayList<Tutorial> tList = new ArrayList<Tutorial>();
+    tList = db.getAllTutorial();
     if (request.getMethod() == "GET") {
-        if (request.getParameter("uid") != null) {
-            kList = db.getUserkreasi(request.getParameter("uid"));
-        }
-        if (request.getParameter("tid") != null) {
-            kList = db.getTutorialkreasi(request.getParameter("tid"));
-        }
         if (request.getParameter("page") == null) {
             numb = 1;
         } else {
         numb = Integer.parseInt(request.getParameter("page"));
         }
-        jumlah = kList.size() / 8 + 1;
+        jumlah = tList.size() / 8 + 1;
         start = 8 * (numb - 1);
         end = start + 8;
     }
@@ -39,7 +34,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Gallery</title>
+        <title>Tutorial</title>
 
         <!-- Bootstrap -->
         <link href="css/style.css" rel="stylesheet" media="screen">
@@ -53,14 +48,14 @@
     <jsp:include page="header.jsp"></jsp:include>
 
         <div class="row">
-            <h2 class="heading">Gallery</h2><br>
+            <h2 class="heading">Tutorials</h2><br>
         <%            //for (Fotokreasi k : kList) {
-            for (int index = start; index < end && index < kList.size(); index++) {
-                Fotokreasi k = kList.get(index);
+            for (int index = start; index < end && index < tList.size(); index++) {
+                Tutorial t = tList.get(index);
         %>
         <div class="col-xs-6 col-md-3">
-            <a href="creation.jsp?id=<%=k.getId()%>" class="thumbnail">                        
-                <img src="uploads/<%=k.getUrl()%>" width="250" height="250">
+            <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">                        
+                <img src="uploads/<%=t.getFeatured_image()%>" width="250" height="250">
             </a>
         </div>
         <%}%>
@@ -69,12 +64,12 @@
         <div class="col-md-12">
             <ul class="pagination">
                 <li <%if (numb == 1) {%>class="disabled"<%;
-                    }%>><a href="gallery.jsp?page=<%=numb - 1%>">&laquo;</a></li>
+                    }%>><a href="tutorials.jsp?page=<%=numb - 1%>">&laquo;</a></li>
                     <%for (int i = 1; i <= jumlah; i++) {%>
                 <li><a href="gallery.jsp?page=<%=i%>"><%=i%></a></li>
                     <%}%>
                 <li <%if (numb == jumlah) {%>class="disabled"<%;
-                    }%>><a href="gallery.jsp?page=<%=numb + 1%>">&raquo;</a></li>
+                    }%>><a href="tutorials.jsp?page=<%=numb + 1%>">&raquo;</a></li>
             </ul>
         </div>
     </div> 

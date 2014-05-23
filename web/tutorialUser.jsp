@@ -50,7 +50,7 @@
         <% for (Tutorial t : tutList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">
-                <img src="<%=t.getFeatured_image()%>">
+                <img src="uploads/<%=t.getFeatured_image()%>">
             </a>
         </div>
         <%}%>
