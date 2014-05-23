@@ -4,6 +4,8 @@
     Author     : acer
 --%>
 
+<%@page import="com.madlyincraft.Fotokreasi"%>
+<%@page import="com.madlyincraft.User"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.madlyincraft.Comment"%>
 <%@page import="com.madlyincraft.TutorialStep"%>
@@ -12,34 +14,40 @@
 <%@page import="com.madlyincraft.Tutorial"%>
 <%@page import="com.madlyincraft.DatabaseInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%! Tutorial t = new Tutorial();%>
+<%! Tutorial t = new Tutorial();
+    User user = new User();
+%>
 <%
-    // post handler
+    HttpSession sess = request.getSession();
+    Object usernameObj = sess.getAttribute("username");
     DatabaseInfo db = new DatabaseInfo();
+    if (usernameObj != null) {
+        user = db.getMemberData(usernameObj.toString());
+    }
     if (request.getMethod() == "POST") {
         if (request.getParameter("action").equalsIgnoreCase("comment")) {
             Calendar calendar = Calendar.getInstance();
             String userID = "";
             String isi = "";
             String tutID = "";
+            String parentID = "0";
             if (request.getMethod() == "POST") {
                 userID = request.getParameter("uid");
                 isi = request.getParameter("komentar");
                 tutID = request.getParameter("tutorialID");
-
-                out.println(tutID);
-                String query = "INSERT INTO comment VALUES (null,'" + tutID + "','" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "');";
+                parentID = request.getParameter("pid");
+                String query = "INSERT INTO comment VALUES (null,'" + tutID + "','" + userID + "','" + isi + "','" + new java.sql.Timestamp(calendar.getTime().getTime()) + "'," + parentID + ");";
+                out.println(query);
                 db.doUpdate(query);
                 response.sendRedirect("tutorial.jsp?id=" + tutID);
             }
-        } else if (request.getParameter("action").equalsIgnoreCase("Like")) {
+        }
+        if (request.getParameter("action").equalsIgnoreCase("Like")) {
             String query = "UPDATE tutorial SET"
                     + " total_like=total_like + 1"
                     + " WHERE id='" + request.getParameter("id") + "'";
-            //out.println(query);
             db.doUpdate(query);
-
-            //db.addLike(request.getParameter("id"));
+            response.sendRedirect("tutorial.jsp?id=" + request.getParameter("id"));
         }
     }
     if (request.getMethod() == "GET") {
@@ -64,17 +72,11 @@
         <![endif]-->
     </head>
     <jsp:include page="header.jsp"></jsp:include>
-    <%
-        // get username
-        HttpSession sess = request.getSession();
-        String username = (String) sess.getAttribute("username");
-        System.out.println(username);
-    %>
 
-    <div class="row">
-        <h2 class="heading"><%=t.getTitle()%></h2>
+        <div class="row">
+            <h2 class="heading"><%=t.getTitle()%></h2>
         <div class="col-md-7">
-            <img class="img-responsive" src="uploads/<%= t.getFeatured_image()%>">
+            <img class="img-responsive" src=<%= t.getFeatured_image()%>>
         </div><!--foto tutorial -->
 
         <div class="col-md-5">
@@ -105,16 +107,20 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <img class="img-responsive share" src="http://3.bp.blogspot.com/-kRWxNK5xqEU/U08RWdLDU1I/AAAAAAAABFY/H_g7oHfJX0k/s1600/FB-f-Logo__blue_30.png"><!-- facebook -->
-                    <img class="img-responsive" src="http://1.bp.blogspot.com/-0z2GGxmTRUs/U08RWcUyyrI/AAAAAAAABFc/DVXZBXPHxMQ/s1600/Twitter_logo_white_30.png"><!-- twitter -->
+                    <a id="ref_fb"  href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[summary]=<?php echo $desc;?>&amp;p[url]=<?php echo urlencode($url);?>&amp;
+                       p[images][0]=<?php echo base_url('assets/').'/gambar.jpg';?>" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');
+                               return false;"><img class="img-responsive share" src="http://3.bp.blogspot.com/-kRWxNK5xqEU/U08RWdLDU1I/AAAAAAAABFY/H_g7oHfJX0k/s1600/FB-f-Logo__blue_30.png"></a><!-- facebook -->
+                    <a id="ref_tw" href="http://twitter.com/home?status=<?php echo $desc; ?>+<?php echo urlencode($url);?>"  
+                       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=430,width=600');
+                               return false;"><img class="img-responsive" src="http://1.bp.blogspot.com/-0z2GGxmTRUs/U08RWcUyyrI/AAAAAAAABFc/DVXZBXPHxMQ/s1600/Twitter_logo_white_30.png"></a><!-- twitter -->
                 </div>
                 <div class="col-md-5">
-                    <!--like-->
                     <form method="POST">
                         <input type="hidden" name="id" value="<%=t.getId()%>">
-                        <input type="image" src="http://1.bp.blogspot.com/-wmIjVCcf2kE/U08TTD-JDHI/AAAAAAAABFs/Jytg4uRAJwE/s1600/love+button.png" name="action" value="Like"><!-- like button --> Love: <%=t.getTotal_like()%> <!-- number of like -->
+                        <input type="image" src="http://1.bp.blogspot.com/-wmIjVCcf2kE/U08TTD-JDHI/AAAAAAAABFs/Jytg4uRAJwE/s1600/love+button.png" name="action" value="Like">
+                        <!-- like button --> Love: <%=t.getTotal_like()%> <!-- number of like -->
                     </form>
-                    <!--end of like-->
+
                 </div>
             </div>
 
@@ -142,13 +148,13 @@
         </div><!--list od supplies -->
     </div>
 
-    <% ArrayList<TutorialStep> tsList = t.getStep();
-        for (TutorialStep ts : tsList) {
-    %>
     <div class="row">
         <h2 class="heading">Instruction</h2>
+        <% ArrayList<TutorialStep> tsList = t.getStep();
+            for (TutorialStep ts : tsList) {
+        %>
         <div class="col-md-7 mbottom">
-            <img class="img-responsive" src = "uploads/<%=ts.getLink_gambar()%>">
+            <img class="img-responsive" src="<%=ts.getLink_gambar()%>" width="450" height="450">
         </div><!--instruction -->
         <div class="col-md-5">
             <table width="450" height="450">
@@ -160,8 +166,29 @@
                 </tr>
             </table>
         </div><!--Description -->
+        <%}%>
     </div>
-    <%}%>               
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <h2 class="heading"><a href="gallery.jsp?tid=<%=t.getId()%>">User's Creation</a></h2>
+        </div>
+        <div class="col-md-offset-9">
+            <a href="addCreation.jsp" class="btn btn-info">Add Your Creation</a>
+        </div>
+    </div>
+    <div class="row">
+        <%ArrayList<Fotokreasi> latestList = new ArrayList<Fotokreasi>();
+            latestList = db.getTutorialkreasi(String.valueOf(t.getId()));
+            for (Fotokreasi t : latestList) {%>
+        <div class="col-xs-6 col-md-3">
+            <a href="creation.jsp?id=<%=t.getId()%>" class="thumbnail">
+                <img class="img-responsive" src="<%= t.getUrl()%>">
+            </a>
+        </div>
+        <%}%>
+    </div><!-- foto kreasi thumbnail -->
 
     <div class="row">
         <h2 class="heading">Comments</h2>
@@ -169,17 +196,14 @@
         <div class="col-md-7">
             <table class="boxcolor">
                 <tr><td>
+                        <%if (usernameObj != null) {%>
                         <form class="comment" method="POST" role="form">
                             <div class="form-group">
                                 <textarea name="komentar" class="form-control" rows="3" placeholder="Write your comment..." value=""></textarea>
                             </div>
-                            <input type ="hidden" name="tutorialID" value="<%=t.getId()%>" />
-                            <input type ="hidden" name="uid" value="<% if (username == null) {
-                                    out.print("anon");
-                                } else {
-                                    out.print(username);
-                                } %>" />
-                            <button type="submit" class="btn btn-primary floatr" name="action" value="comment">Post</button>
+                            <input type ="hidden" name="tutorialID" value=<%=t.getId()%> />
+                            <input type ="hidden" name="uid" value="<%=usernameObj%>" />
+                            <button type="submit" name="action" value="comment" class="btn btn-primary floatr">Post</button>
                         </form>
                     </td></tr>
             </table>
@@ -193,31 +217,36 @@
                 <tr><td>
                         <div class="row comment2">
                             <div class="col-md-1 commentpad">AS:</div>
-                            <div class="col-md-1"><img src="http://placehold.it/50x50"></div>
-                            <div class="col-md-3 commentpad commentname">Namanya Namanya</div>
+                            <div class="col-md-1"><a href="profile.jsp"><img src="uploads/pp/<%=user.getDisplay_picture()%>" width="50" height="50"></a></div>
                             <div class="col-md-7">
-
+                                <div class="col-md-3 commentpad commentname"><%=usernameObj%></div>
                             </div>
                         </div>
                     </td></tr>
+                    <%} else {
+                            out.println("Silakan login untuk memberi komentar");
+                        }%>
             </table>
         </div>
     </div><!-- comment other -->
 
     <%
-        ArrayList<Comment> cList = t.getKomentar();%>
+        ArrayList<Comment> cList = t.getKomentar();
+    %>
     <% for (Comment c : cList) {%>
     <div class="row">
         <div class="col-md-7">
             <p class="borderline"></p>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="http://placehold.it/80x80">
+                    <%
+                        User u = db.getMemberData(c.getUname());
+                    %>
+                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="uploads/pp/<%=u.getDisplay_picture()%>" width="80" height="80"> </a>
                 </div>
                 <div class="col-md-10">
                     <table frame="box" width="535" height="70" class="usrcomment">
@@ -230,19 +259,58 @@
                         <div class="row">
                             <tr>
                             <div class="col-md-12"><td class="commentpad4"><%= c.getContent()%></td></div>
+                            <td></td>
                             </tr>
                         </div>
                         <div class="row">
                             <tr>
                             <div class="col-md-12"><td class="commentpad4"><a href="#">Reply</a></td></div>
+                            <td></td>
                             </tr>
                         </div>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-    <%}%>
+        <%
+        //ini bagian kalo komennya reply dari komen lain
+        if (c.getChilds() != null) {
+                for (Comment cs : c.getChilds()) {
+        %>
+        <div class="row" style="margin-left:90px">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-2">
+                        <%
+                            User us = db.getMemberData(cs.getUname());
+                        %>
+                        <a href="profile.jsp?id=<%=us.getUsername()%>"> <img src="uploads/pp/<%=us.getDisplay_picture()%>" width="80" height="80"> </a>
+                    </div>
+                    <div class="col-md-10">
+                        <table frame="box" width="535" height="70" class="usrcomment">
+                            <div class="row">
+                                <tr>
+                                <div class="col-md-8"><td class="commentpad2"><%= cs.getUname()%></td></div>
+                                <div class="col-md-4"><td class="floatr commentpad3"><%= cs.getTimestamp()%></td></div>
+                                </tr>
+                            </div>
+                            <div class="row">
+                                <tr>
+                                <div class="col-md-12"><td class="commentpad4"><%= cs.getContent()%></td></div>
+                                </tr>
+                            </div>
+                            <div class="row">
+                                <tr>
+                                <div class="col-md-12"><td class="commentpad4"><a href="#">Reply</a></td></div>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+                <%
+                        }
+                    }%>
+            </div>
 
-
-    <jsp:include page="footer.jsp"></jsp:include>
+            <%}%>
+            <jsp:include page="footer.jsp"></jsp:include>

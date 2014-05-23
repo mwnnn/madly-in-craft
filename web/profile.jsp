@@ -4,6 +4,7 @@
     Author     : acer
 --%>
 
+<%@page import="com.madlyincraft.Fotokreasi"%>
 <%@page import="com.madlyincraft.Message"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
@@ -74,7 +75,7 @@
 
         <div class="row">
             <div class="col-md-3 mbottom">
-                <img src="uploads/pp/<%=user.getDisplay_picture()%>">
+                <img src="uploads/pp/<%=user.getDisplay_picture()%>" width="200" height="200">
         </div>
         <div class="col-md-9">
             <div class="row">
@@ -98,7 +99,7 @@
     </div>
 
     <div class="row">
-        <a href="tutorialUser.jsp"><h2 class="heading">Tutorials (<%=tutList.size()%>)</h2></a>
+        <a href="tutorialUser.jsp?uid=<%=user.getUsername()%>"><h2 class="heading">Tutorials (<%=tutList.size()%>)</h2></a>
         <% for (Tutorial t : tutList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="tutorial.jsp?id=<%=t.getId()%>" class="thumbnail">
@@ -107,6 +108,22 @@
         </div>
         <%}%>
     </div><!-- latest gallery thumbnails -->
+
+    <%ArrayList<Fotokreasi> latestList = new ArrayList<Fotokreasi>();
+        latestList = db.getUserkreasi(user.getUsername());
+    %>
+    <div class="row">
+        <h2 class="heading"><a href="gallery.jsp?uid=<%=user.getUsername()%>">User's Creation (<%=latestList.size()%>)</a></h2>
+    </div>
+    <div class="row">
+        <%for (Fotokreasi t : latestList) {%>
+        <div class="col-xs-6 col-md-3">
+            <a href="creation.jsp?id=<%=t.getId()%>" class="thumbnail">
+                <img class="img-responsive" src="<%= t.getUrl()%>">
+            </a>
+        </div>
+        <%}%>
+    </div><!-- foto kreasi thumbnail -->
 
     <div class="row">
         <h2 class="heading">Comments</h2>
@@ -127,14 +144,14 @@
             </table>
         </div>
     </div> <!-- comment form -->
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-7">
             <table class="boxcolor" width="650px">
                 <tr><td>
                         <div class="row comment2">
                             <div class="col-md-1 commentpad">AS:</div>
-                            <div class="col-md-1"><a href="profile.jsp"><img src="<%=db.getMemberData(usernameObj.toString()).getDisplay_picture()%>"></a></div>
+                            <div class="col-md-1"><a href="profile.jsp"><img src="uploads/pp/<%=db.getMemberData(usernameObj.toString()).getDisplay_picture()%>" width="50" height="50"></a></div>
                             <div class="col-md-7">
                                 <div class="col-md-3 commentpad commentname"><%=usernameObj%></div>
                             </div>
@@ -160,7 +177,7 @@
                     <%
                         User u = db.getMemberData(m.getSender());
                     %>
-                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="<%=u.getDisplay_picture()%>" ></a>
+                    <a href="profile.jsp?id=<%=u.getUsername()%>"> <img src="uploads/pp/<%=u.getDisplay_picture()%>" width="50" height="50"></a>
                 </div>
                 <div class="col-md-10">
                     <table frame="box" width="535" height="70" class="usrcomment">
@@ -173,11 +190,13 @@
                         <div class="row">
                             <tr>
                             <div class="col-md-12"><td class="commentpad4"><%= m.getContent()%></td></div>
+                            <td></td>
                             </tr>
                         </div>
                         <div class="row">
                             <tr>
                             <div class="col-md-12"><td class="commentpad4"><a href="#">Reply</a></td></div>
+                            <td></td>
                             </tr>
                         </div>
                     </table>
