@@ -65,8 +65,7 @@
             <h2 class="heading"><%=k.getTitle()%></h2>
         <h4 class="heading">By <a href="profile.jsp?id=<%=k.getUser_id()%>"><%=k.getUser_id()%></a></h4>
         <div class="col-md-7">
-            <!--<img class="img-responsive" src="http://placehold.it/650x450">-->
-            <img class="img-responsive" src="<%=k.getUrl()%>">
+            <img class="img-responsive" src="uploads/<%=k.getUrl()%>" width="650" height="450">
         </div><!--foto kreasi -->
 
         <div class="col-md-5">

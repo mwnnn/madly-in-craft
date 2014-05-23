@@ -10,6 +10,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <% // get featured tutorial: tutorial yang punya like terbanyak
+    int jumlah = 0;
+    int start = 0;
+    int end = 0;
+    int numb = 0;
     DatabaseInfo db = new DatabaseInfo();
     ArrayList<Fotokreasi> kList = new ArrayList<Fotokreasi>();
     kList = db.getAllFotokreasi();
@@ -20,6 +24,14 @@
         if (request.getParameter("tid") != null) {
             kList = db.getTutorialkreasi(request.getParameter("tid"));
         }
+        if (request.getParameter("page") == null) {
+            numb = 1;
+        } else {
+        numb = Integer.parseInt(request.getParameter("page"));
+        }
+        jumlah = kList.size() / 8 + 1;
+        start = 8 * (numb - 1);
+        end = start + 8;
     }
 
 %>
@@ -42,11 +54,13 @@
 
         <div class="row">
             <h2 class="heading">Gallery</h2><br>
-        <% for (Fotokreasi k : kList) {%>
+        <%            //for (Fotokreasi k : kList) {
+            for (int index = start; index < end && index < kList.size(); index++) {
+                Fotokreasi k = kList.get(index);
+        %>
         <div class="col-xs-6 col-md-3">
             <a href="creation.jsp?id=<%=k.getId()%>" class="thumbnail">                        
-                <!--<img src="http://placehold.it/250x250">-->
-                <img src="<%=k.getUrl()%>">
+                <img src="uploads/<%=k.getUrl()%>" width="250" height="250">
             </a>
         </div>
         <%}%>
@@ -54,13 +68,13 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="pagination">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
+                <li <%if (numb == 1) {%>class="disabled"<%;
+                    }%>><a href="gallery.jsp?page=<%=numb - 1%>">&laquo;</a></li>
+                    <%for (int i = 1; i <= jumlah; i++) {%>
+                <li><a href="gallery.jsp?page=<%=i%>"><%=i%></a></li>
+                    <%}%>
+                <li <%if (numb == jumlah) {%>class="disabled"<%;
+                    }%>><a href="gallery.jsp?page=<%=numb + 1%>">&raquo;</a></li>
             </ul>
         </div>
     </div> 

@@ -115,12 +115,28 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <a id="ref_fb"  href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[summary]=<?php echo $desc;?>&amp;p[url]=<?php echo urlencode($url);?>&amp;
-                       p[images][0]=<?php echo base_url('assets/').'/gambar.jpg';?>" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=400,width=600');
-                               return false;"><img class="img-responsive share" src="http://3.bp.blogspot.com/-kRWxNK5xqEU/U08RWdLDU1I/AAAAAAAABFY/H_g7oHfJX0k/s1600/FB-f-Logo__blue_30.png"></a><!-- facebook -->
-                    <a id="ref_tw" href="http://twitter.com/home?status=<?php echo $desc; ?>+<?php echo urlencode($url);?>"  
-                       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=no,scrollbars=no,height=430,width=600');
-                               return false;"><img class="img-responsive" src="http://1.bp.blogspot.com/-0z2GGxmTRUs/U08RWcUyyrI/AAAAAAAABFc/DVXZBXPHxMQ/s1600/Twitter_logo_white_30.png"></a><!-- twitter -->
+                    <div id="fb-root"></div>
+                    <script>(function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id))
+                                return;
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));</script>
+                    <div class="fb-share-button" data-href="https://madlyincraft.cloudapps.net/tutorial.jsp" data-type="button_count"></div>
+                    <br /><br />
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+                    <script>!function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (!d.getElementById(id)) {
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+    }(document, "script", "twitter-wjs");</script>
                 </div>
                 <div class="col-md-5">
                     <form method="POST">
@@ -144,13 +160,6 @@
                 %>
                 <p><%=m.getId()%>. <%=m.getNama()%></p>
                 <%}%>
-                <!--
-                2. Alat 2 <br>
-                3. Alat 3 <br>
-                4. Bahan 1 <br>
-                5. Bahan 2 <br>
-                6. Bahan 3
-                -->
                 </td></tr>
             </table>
         </div><!--list od supplies -->
@@ -192,7 +201,7 @@
             for (Fotokreasi t : latestList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="creation.jsp?id=<%=t.getId()%>" class="thumbnail">
-                <img class="img-responsive" src="<%= t.getUrl()%>">
+                <img class="img-responsive" src="uploads/<%= t.getUrl()%>" width="250" height="250">
             </a>
         </div>
         <%}%>

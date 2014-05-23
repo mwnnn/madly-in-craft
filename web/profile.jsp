@@ -119,7 +119,7 @@
         <%for (Fotokreasi t : latestList) {%>
         <div class="col-xs-6 col-md-3">
             <a href="creation.jsp?id=<%=t.getId()%>" class="thumbnail">
-                <img class="img-responsive" src="<%= t.getUrl()%>">
+                <img class="img-responsive" src="uploads/<%= t.getUrl()%>" width="250" height="250">
             </a>
         </div>
         <%}%>
